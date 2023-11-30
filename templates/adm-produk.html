@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block body %}
+<div class="d-flex flex-row" style="height: 100%">
+  <div class="bg-light" style="height: 100%">
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100"
+      style="width: 280px"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+      >
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Menu</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" aria-current="page">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#home"></use>
+            </svg>
+            Facilities
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link link-dark">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#speedometer2"></use>
+            </svg>
+            Products
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flex-grow-1 p-3">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Fasilitas</th>
+          <th>Jenis Fasilitas</th>
+          <th>Lokasi</th>
+          <th>Deskripsi</th>
+          <th>Foto</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.nama_usaha }}</td>
+          <td>{{ user.kategori }}</td>
+          <td>{{ user.daerah}}</td>
+          <td>{{ user.sosial_media }}</td>
+          <td>{{ user.status }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <form action="/admin/update_status" method="POST">
+              <input
+                type="hidden"
+                name="username"
+                value="{{ user.username }}"
+              />
+              <select name="status">
+                <option value="active">Active</option>
+                <option value="nonactive" name="nonactive">Non-active</option>
+              </select>
+              <button type="submit" class="btn btn-primary">
+                Update Status
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

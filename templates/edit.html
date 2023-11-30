@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="modal-content">
+      <article class="box">
+        <div class="media-content">
+          <div class="field">
+            <label class="label" for="input-pic">Foto sampul</label>
+            <div class="control is-expanded">
+              <div class="file has-name">
+                <label class="file-label" style="width: 100%">
+                  <input
+                    id="input-cover"
+                    class="file-input"
+                    type="file"
+                    name="resume"
+                  />
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label">Select a file</span>
+                  </span>
+                  <span
+                    id="file-name"
+                    class="file-name"
+                    style="width: 100%; max-width: 100%"
+                  >
+                    {{user_info.cover_pic}}
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="input-pic">Foto profil</label>
+            <div class="control is-expanded">
+              <div class="file has-name">
+                <label class="file-label" style="width: 100%">
+                  <input
+                    id="input-profile"
+                    class="file-input"
+                    type="file"
+                    name="resume"
+                  />
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label">Select a file</span>
+                  </span>
+                  <span
+                    id="file-name"
+                    class="file-name"
+                    style="width: 100%; max-width: 100%"
+                  >
+                    {{user_info.profile_pic}}
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="input-sosial-media"
+              >Sosial media (instagram)</label
+            >
+            <p class="control">
+              <input
+                id="input-sosial-media"
+                class="input"
+                placeholder="Sosial media (instagram)"
+                value="{{user_info.sosial_media}}"
+              />
+            </p>
+          </div>
+
+          <div class="field">
+            <label class="label" for="textarea-about">Deskripsi usaha</label>
+            <p class="control">
+              <textarea
+                id="textarea-deskripsi"
+                class="textarea"
+                placeholder="Deskripsi usaha"
+              >
+{{user_info.deskripsi_usaha}}
+            </textarea
+              >
+            </p>
+          </div>
+
+          <nav class="level is-mobile">
+            <div class="level-left"></div>
+            <div class="level-right">
+              <div class="level-item">
+                <a
+                  class="button is-button-blue is-bold"
+                  onclick="update_profile()"
+                >
+                  Perbarui</a
+                >
+              </div>
+
+              <div class="level-item">
+                <a
+                  class="button is-button-red"
+                  onclick="$('#modal-edit').removeClass('is-active')"
+                >
+                  Batal</a
+                >
+              </div>
+            </div>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+{% extends 'base.html' %} {% block body %}
+<div class="d-flex flex-row" style="height: 100%">
+  <div class="bg-light" style="height: 100%">
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100"
+      style="width: 280px"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+      >
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Menu</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" aria-current="page">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#home"></use>
+            </svg>
+            Facilities
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link link-dark">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#speedometer2"></use>
+            </svg>
+            Products
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flex-grow-1 p-3">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tipe Rumah</th>
+          <th>Deskripsi</th>
+          <th>Foto</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.nama_usaha }}</td>
+          <td>{{ user.kategori }}</td>
+          <td>{{ user.daerah}}</td>
+          <td>{{ user.sosial_media }}</td>
+          <td>{{ user.status }}</td>
+          <td></td>
+          <td>
+            <form action="/admin/update_status" method="POST">
+              <input
+                type="hidden"
+                name="username"
+                value="{{ user.username }}"
+              />
+              <select name="status">
+                <option value="active">Active</option>
+                <option value="nonactive" name="nonactive">Non-active</option>
+              </select>
+              <button type="submit" class="btn btn-primary">
+                Update Status
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="modal-content">
+    <article class="box">
+      <div class="media-content">
+        <div class="field">
+          <label class="label" for="input-pic">Foto sampul</label>
+          <div class="control is-expanded">
+            <div class="file has-name">
+              <label class="file-label" style="width: 100%">
+                <input
+                  id="input-cover"
+                  class="file-input"
+                  type="file"
+                  name="resume"
+                />
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span class="file-label">Select a file</span>
+                </span>
+                <span
+                  id="file-name"
+                  class="file-name"
+                  style="width: 100%; max-width: 100%"
+                >
+                  {{user_info.cover_pic}}
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="input-pic">Foto profil</label>
+          <div class="control is-expanded">
+            <div class="file has-name">
+              <label class="file-label" style="width: 100%">
+                <input
+                  id="input-profile"
+                  class="file-input"
+                  type="file"
+                  name="resume"
+                />
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span class="file-label">Select a file</span>
+                </span>
+                <span
+                  id="file-name"
+                  class="file-name"
+                  style="width: 100%; max-width: 100%"
+                >
+                  {{user_info.profile_pic}}
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="input-sosial-media"
+            >Sosial media (instagram)</label
+          >
+          <p class="control">
+            <input
+              id="input-sosial-media"
+              class="input"
+              placeholder="Sosial media (instagram)"
+              value="{{user_info.sosial_media}}"
+            />
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="textarea-about">Deskripsi usaha</label>
+          <p class="control">
+            <textarea
+              id="textarea-deskripsi"
+              class="textarea"
+              placeholder="Deskripsi usaha"
+            >
+{{user_info.deskripsi_usaha}}
+            </textarea>
+          </p>
+        </div>
+
+        <nav class="level is-mobile">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <a
+                class="button is-button-blue is-bold"
+                onclick="update_profile()"
+              >
+                Perbarui</a
+              >
+            </div>
+
+            <div class="level-item">
+              <a
+                class="button is-button-red"
+                onclick="$('#modal-edit').removeClass('is-active')"
+              >
+                Batal</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+    </article>
+  </div>
+</div>
+{% endblock %}
