@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emerald Garden</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <section
+      class="align-middle w-100"
+      style="
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div class="container d-flex flex-column">
+        <div class="col-xl-6 col-md-9 mx-auto">
+          <div class="card rounded">
+            <div class="card-body">
+              <div class="container mt-4 px-5 py-3">
+
+                <h3><center>Login</center></h2><br/>
+                <div class="tab-content" id="pills-tabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="pills-home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                  >
+                    <form action="" class="mb-2">
+                      <div class="form-group mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Username"
+                          name="username"
+                          id="username"
+                        />
+                      </div>
+                      <div class="form-group mb-3">
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="Password"
+                          name="password"
+                          id="password"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        class="btn text-white mx-auto d-block px-4"
+                        onclick="login()"
+                        style="background-color: green"
+                      >
+                        Masuk Sebagai Admin
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
