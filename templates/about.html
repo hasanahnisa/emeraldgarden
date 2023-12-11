@@ -1,82 +1,50 @@
 {% extends 'base.html' %} {% block body %}
-
-<!-- Start Heroes 
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <img src="static/img/house.jpeg" alt="Album Cover" class="img-fluid"/>
-        <h1 class="fw-light">Album example</h1>
-        <p class="lead text-body-secondary">
-          Something short and leading about the collection below—its contents,
-          the creator, etc. Make it short and sweet, but not too short so
-          folks don’t simply skip over it entirely.
-        </p>
-      </div>
-    </div>
-  </section>
-   End Heroes -->
-
-<!-- Start About Us 
-    <h2 class="featurette-heading">About Us <br/>
-      <br/> <p class="fs-5 col-sm text-right">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quam elementum pulvinar etiam non quam lacus suspendisse 
-        faucibus interdum. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in dictum. Convallis posuere morbi leo urna 
-        molestie at elementum eu facilisis. Molestie nunc non blandit massa enim. Aliquet sagittis id consectetur purus ut faucibus 
-        pulvinar elementum integer. Quisque non tellus orci ac auctor augue mauris augue. Vestibulum lectus mauris ultrices eros in
-        cursus turpis massa tincidunt. Imperdiet proin fermentum leo vel orci porta non pulvinar. Sed blandit libero volutpat sed cras 
-        ornare arcu dui vivamus. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis. Blandit cursus risus at ultrices 
-        mi tempus imperdiet nulla malesuada. Eu feugiat pretium nibh ipsum. Arcu bibendum at varius vel. Tortor pretium viverra 
-        suspendisse potenti nullam ac tortor. Viverra vitae congue eu consequat ac felis donec et. Vel turpis nunc eget lorem dolor 
-        sed. Porta lorem mollis aliquam ut porttitor. </p>
-
-      <div class="text-center">
-      <br/><button class="btn btn-success btn-lg col-6 mx-auto" type="button">Kontak Sekarang</button>
-  </div>
-</section>
-     End About Us -->
-
-<!-- <section>
-  <div class="text-center my-5">
-    <img
-      src="/static/img/home-1.jpg"
-      alt=".."
-      style="width: 100%; height: auto"
-      class="mb-5"
-    />
-    <h1 class="text-black fs-3 fw-bolder">Full Width Pics</h1>
-    <p class="text-black-50 mb-0">Landing Page Template</p>
-  </div>
-</section> -->
-
 <header
   class="py-5 bg-image-full"
-  style="background-image: url('/static/img/home-1.jpg')"
+  style="
+    background-image: url('/static/img/about.jpg');
+    background-size: cover;
+    height: 500px;
+  "
 >
-  <div class="text-center my-5">
-    <h1 class="text-white fs-3 fw-bolder">Perumahan Emerald Garden</h1>
-    <p class="text-white-50 mb-0">Tentang Kami</p>
+  <div
+    class="d-flex flex-column justify-content-center align-items-center h-100"
+  >
+    <h1 class="text-black fs-3 fw-bolder">Perumahan Emerald Garden</h1>
+    <p class="text-black-50 mb-0">Tentang Kami</p>
   </div>
 </header>
 
 <!-- Start Detail About Us -->
-<section class="py-5">
-  <div class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-        <h2>Tentang Kami</h2>
-        <p class="lead">
-          A single, lightweight helper class allows you to add engaging, full
-          width background images to sections of your page.
-        </p>
-        <p class="mb-0">
-          The universe is almost 14 billion years old, and, wow! Life had no
-          problem starting here on Earth! I think it would be inexcusably
-          egocentric of us to suggest that we're alone in the universe.
-        </p>
-      </div>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <p class="lead">
+        Emerald Garden bukan hanya sekadar tempat tinggal; ini merupakan sebuah
+        rumah yang memancarkan kehangatan, desain modern minimalis, dan
+        fasilitas terbaik untuk memenuhi segala kebutuhan Anda.
+      </p>
+      <br />
+      <p class="mb-0">
+        Dengan desain yang dipikirkan secara matang, setiap sudut di Emerald
+        Garden menciptakan suasana yang mengundang, mencerminkan perpaduan
+        antara fungsionalitas dan estetika. Keberadaan fasilitas terbaik tidak
+        hanya menjadi pelengkap, tetapi juga menjadi bagian tak terpisahkan dari
+        pengalaman hidup di sini. Dari kolam renang yang menyegarkan hingga
+        taman bermain anak-anak yang riang, setiap elemen dirancang untuk
+        meningkatkan kualitas hidup Anda. Kami mengundang Anda untuk merasakan
+        kebahagiaan di sini, di tengah-tengah lingkungan yang ramah dan aman.
+        Komitmen kami terhadap keamanan melibatkan penggunaan teknologi keamanan
+        terkini dan tim keamanan yang ahli. Sehingga, di sini, Anda tidak hanya
+        mendapatkan rumah yang indah, tetapi juga tempat yang menyediakan
+        ketenangan pikiran. Dalam setiap langkah yang Anda ambil di dalam
+        Emerald Garden, Anda akan merasakan nuansa kebersamaan dan kenyamanan
+        yang membentuk fondasi dari rumah yang sempurna.
+      </p>
     </div>
   </div>
-</section>
+</div>
+
 <!-- End Detail About Us -->
 
 <!-- Start Preview Fasilitas -->
@@ -198,4 +166,63 @@
 </div>
 <!--  End Preview Fasilitas -->
 
+<!-- Start Siteplan -->
+<div class="text-center d-flex flex-column align-items-center">
+  <h2>Siteplan Emerald Garden</h2>
+  <br />
+  <img
+    class="img-fluid mx-auto"
+    src="/static/img/siteplan.jpg"
+    alt="Siteplan"
+    style="width: 3000px; height: 990px"
+  />
+</div>
+
+<!-- End Siteplan -->
+
+<!-- Start Kantor -->
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2>detail kantor</h2>
+      </div>
+      <div class="col-lg-6">
+        <div class="map" id="contact">
+          <div class="mapouter">
+            <div class="gmap_canvas">
+              <iframe
+                src="https://maps.google.com/maps?q=perumahan%20emerald%20garden%20bumiayu&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; height: 100%"
+              ></iframe>
+              <style>
+                .mapouter {
+                  position: relative;
+                  height: 400px; /* Adjust this height as needed */
+                  width: 100%;
+                }
+                .gmap_canvas {
+                  overflow: hidden;
+                  height: 100%;
+                  width: 100%;
+                }
+                .gmap_canvas iframe {
+                  position: relative;
+                  z-index: 2;
+                  width: 100%;
+                  height: 100%;
+                }
+              </style>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- End Kantor -->
 {% endblock %}

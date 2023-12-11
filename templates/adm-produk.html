@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block body %}
 <div class="d-flex flex-row" style="height: 100%">
-  <div class="bg-light" style="height: 100%">
+  <div class="bg-light" style="height: 100%; min-height: 1000px">
     <div
       class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100"
       style="width: 280px"
@@ -17,19 +17,23 @@
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page">
+          <a
+            href="/admin/fasilitas"
+            class="nav-link active"
+            aria-current="page"
+          >
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home"></use>
             </svg>
-            Facilities
+            Fasilitas
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link link-dark">
+          <a href="/admin/produk" class="nav-link link-dark">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2"></use>
             </svg>
-            Products
+            Produk
           </a>
         </li>
       </ul>
@@ -41,44 +45,118 @@
       <thead>
         <tr>
           <th>No</th>
-          <th>Nama Fasilitas</th>
-          <th>Jenis Fasilitas</th>
-          <th>Lokasi</th>
-          <th>Deskripsi</th>
-          <th>Foto</th>
+          <th>Tipe Produk</th>
+          <th>Deskripsi Produk</th>
+          <th>Foto Produk</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        {% for user in users %}
         <tr>
-          <td>{{ user.username }}</td>
-          <td>{{ user.nama_usaha }}</td>
-          <td>{{ user.kategori }}</td>
-          <td>{{ user.daerah}}</td>
-          <td>{{ user.sosial_media }}</td>
-          <td>{{ user.status }}</td>
-          <td>{{ user.role }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
           <td>
-            <form action="/admin/update_status" method="POST">
-              <input
-                type="hidden"
-                name="username"
-                value="{{ user.username }}"
-              />
-              <select name="status">
-                <option value="active">Active</option>
-                <option value="nonactive" name="nonactive">Non-active</option>
-              </select>
-              <button type="submit" class="btn btn-primary">
-                Update Status
-              </button>
-            </form>
+            <button
+              class="btn btn-primary"
+              onclick="$('#modal-edit').addClass('is-active')"
+            >
+              Edit
+            </button>
+            <button class="btn btn-danger" onclick="">Delete</button>
           </td>
         </tr>
       </tbody>
-      {% endfor %}
     </table>
   </div>
+
+  <!-- Start Edit Data -->
+  <div class="modal" id="modal-edit">
+    <div
+      class="modal-background"
+      onclick="$('#modal-edit').removeClass('is-active')"
+    ></div>
+    <article>
+      <div class="media-content modal-card bg-white p-5 rounded">
+        <div class="field">
+          <th>
+            <label for="tipeSelect" class="visually-hidden">Pilih Tipe</label>
+            <select class="form-select" id="tipeSelect" name="tipe">
+              <option selected disabled>Pilih Tipe</option>
+              <option value="30">Tipe 30</option>
+              <option value="36">Tipe 36</option>
+              <option value="60">Tipe 60</option>
+              <option value="kavling">Kavling</option>
+            </select>
+          </th>
+        </div>
+
+        <div class="field">
+          <label class="label" for="textarea-about">Deskripsi Produk</label>
+          <p class="control">
+            <textarea
+              id="textarea-deskripsi"
+              class="textarea"
+              placeholder="Deskripsi usaha"
+            >
+            </textarea>
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="input-pic">Foto Produk</label>
+          <div class="control is-expanded">
+            <div class="file has-name">
+              <label class="file-label" style="width: 100%">
+                <input
+                  id="input-profile"
+                  class="file-input"
+                  type="file"
+                  name="resume"
+                />
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span class="file-label">Select a file</span>
+                </span>
+                <span
+                  id="file-name"
+                  class="file-name"
+                  style="width: 100%; max-width: 100%"
+                >
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <nav class="level is-mobile">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <a
+                class="button is-button-blue is-bold"
+                onclick="update_profile()"
+              >
+                Perbarui</a
+              >
+            </div>
+
+            <div class="level-item">
+              <a
+                class="button is-button-red"
+                onclick="$('#modal-edit').removeClass('is-active')"
+              >
+                Batal</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+    </article>
+  </div>
+  <!-- End Edit Data -->
 </div>
 {% endblock %}
