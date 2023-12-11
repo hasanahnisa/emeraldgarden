@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block body %}
+<h1>{{ msg }}</h1>
 <div class="d-flex flex-row" style="height: 100%">
   <div class="bg-light" style="height: 100%; min-height: 1000px">
     <div
@@ -41,6 +42,12 @@
   </div>
 
   <div class="flex-grow-1 p-3">
+    <button
+              class="btn btn-primary"
+              onclick="$('#modal-add').addClass('is-active')"
+            >
+              Tambah Data
+            </button>
     <table class="table">
       <thead>
         <tr>
@@ -60,12 +67,12 @@
           <td></td>
           <td></td>
           <td>
-            <button
+            <!-- <button
               class="btn btn-primary"
               onclick="$('#modal-edit').addClass('is-active')"
             >
               Edit
-            </button>
+            </button> -->
           </td>
         </tr>
       </tbody>
@@ -174,5 +181,113 @@
     </article>
   </div>
   <!-- End Edit Data -->
+
+    <!-- Start Add Data -->
+    <div class="modal" id="modal-add">
+      <div
+        class="modal-background"
+        onclick="$('#modal-add').removeClass('is-active')"
+      ></div>
+      <article>
+        <div class="media-content modal-card bg-white p-5 rounded">
+          <div class="form-group mb-4 is-align-items-center">
+            <strong class="mr-2 is-blue">Nama Fasilitas</strong>
+            <input
+              type="text"
+              class="form-control"
+              name="sosial-media"
+              id="sosial-media"
+              value=""
+          
+            />
+          </div>
+  
+          <div class="field">
+            <th>
+              <label for="tipeSelect" class="visually-hidden"
+                >Jenis Fasilitas</label
+              >
+              <select class="form-select" id="tipeSelect" name="tipe">
+                <option selected disabled>Jenis Fasilitas</option>
+                <option value="playground">Playground</option>
+                <option value="lapangan">Lapangan Olahraga</option>
+                <option value="tempatibadah">Tempat Ibadah</option>
+                <option value="pos">Pos Keamanan</option>
+                <option value="pagar">Pagar Kawasan</option>
+              </select>
+            </th>
+          </div>
+  
+          <div class="field">
+            <label class="label" for="textarea-about">Deskripsi Fasilitas</label>
+            <p class="control">
+              <textarea
+                id="textarea-deskripsi"
+                class="textarea"
+                placeholder="Deskripsi usaha"
+              ></textarea>
+            </p>
+          </div>
+  
+          <div class="field">
+            <label class="label" for="input-pic">Foto Fasilitas</label>
+            <div class="control is-expanded">
+              <div class="file has-name">
+                <label class="file-label" style="width: 100%">
+                  <input
+                    id="input-profile"
+                    class="file-input"
+                    type="file"
+                    name="resume"
+                  />
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label">Select a file</span>
+                  </span>
+                  <span
+                    id="file-name"
+                    class="file-name"
+                    style="width: 100%; max-width: 100%"
+                  >
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+  
+          <nav class="level is-mobile">
+            <div class="level-left"></div>
+            <div class="level-right">
+              <div class="level-item">
+                <a
+                  class="button is-button-blue is-bold"
+                  onclick="update_profile()"
+                >
+                  Perbarui</a
+                >
+              </div>
+  
+              <div class="level-item">
+                <a
+                  class="button is-button-red"
+                  onclick="$('#modal-add').removeClass('is-active')"
+                >
+                  Batal</a
+                >
+              </div>
+            </div>
+          </nav>
+        </div>
+      </article>
+    </div>
+    <!-- End Add Data -->
 </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+
+  </script>
 {% endblock %}

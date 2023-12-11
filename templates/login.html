@@ -12,6 +12,7 @@
     />
   </head>
   <body>
+   
     <section
       class="align-middle w-100"
       style="
@@ -35,14 +36,13 @@
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
                   >
-                    <form action="" class="mb-2">
+  
                       <div class="form-group mb-3">
                         <input
                           type="text"
                           class="form-control"
                           placeholder="Username"
-                          name="username"
-                          id="username"
+                          id="input_user"
                         />
                       </div>
                       <div class="form-group mb-3">
@@ -50,19 +50,18 @@
                           type="password"
                           class="form-control"
                           placeholder="Password"
-                          name="password"
-                          id="password"
+                          id="input_pass"
                         />
                       </div>
                       <button
-                        type="button"
+                        type="submit"
+                        onclick="sign_in()"
                         class="btn text-white mx-auto d-block px-4"
-                        onclick="login()"
                         style="background-color: green"
                       >
                         Masuk Sebagai Admin
                       </button>
-                    </form>
+           
                   </div>
                 </div>
               </div>
@@ -71,5 +70,56 @@
         </div>
       </div>
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+     
+      function sign_in() {
+        let username = $("#input_user").val();
+        let password = $("#input_pass").val();
+    
+        if (username === "") {
+          $("#help-user-login").text("Please input your username.");
+          $("#input_user").focus();
+          return;
+        } else {
+          $("#help-user-login").text("");
+        }
+    
+        if (password === "") {
+          $("#help-password").text("Please input your password.");
+          $("#input_pass").focus();
+          return;
+        } else {
+          $("#help-password-login").text("");
+        }
+        $.ajax({
+          type: "POST",
+          url: "/sign_in",
+          data: {
+            username_give: username,
+            password_give: password,
+          },
+          success: function (response) {
+            if (response["result"] === "success") {
+              $.cookie("my_token", response["token"], { path: "/" });
+              swal("Success","Login successful!", "success");
+    
+              window.location.replace("/admin/fasilitas");
+            } else {
+              swal("Failed",response["msg"], "error");
+    
+            }
+          },
+        });
+      }
+    </script>
   </body>
 </html>
