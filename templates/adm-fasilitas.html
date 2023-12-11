@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block body %}
 <div class="d-flex flex-row" style="height: 100%">
-  <div class="bg-light" style="height: 100%; min-height: 1000px">
+  <div class="bg-light" style="height: 100%">
     <div
       class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100"
       style="width: 280px"
@@ -17,23 +17,19 @@
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a
-            href="/admin/fasilitas"
-            class="nav-link active"
-            aria-current="page"
-          >
+          <a href="#" class="nav-link active" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home"></use>
             </svg>
-            Fasilitas
+            Facilities
           </a>
         </li>
         <li>
-          <a href="/admin/produk" class="nav-link link-dark">
+          <a href="#" class="nav-link link-dark">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2"></use>
             </svg>
-            Produk
+            Products
           </a>
         </li>
       </ul>
@@ -45,83 +41,78 @@
       <thead>
         <tr>
           <th>No</th>
-          <th>Nama Fasilitas</th>
-          <th>Jenis Fasilitas</th>
+          <th>Tipe Rumah</th>
           <th>Deskripsi</th>
           <th>Foto</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
+        {% for user in users %}
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.nama_usaha }}</td>
+          <td>{{ user.kategori }}</td>
+          <td>{{ user.daerah}}</td>
+          <td>{{ user.sosial_media }}</td>
+          <td>{{ user.status }}</td>
           <td></td>
           <td>
-            <button
-              class="btn btn-primary"
-              onclick="$('#modal-edit').addClass('is-active')"
-            >
-              Edit
-            </button>
+            <form action="/admin/update_status" method="POST">
+              <input
+                type="hidden"
+                name="username"
+                value="{{ user.username }}"
+              />
+              <select name="status">
+                <option value="active">Active</option>
+                <option value="nonactive" name="nonactive">Non-active</option>
+              </select>
+              <button type="submit" class="btn btn-primary">
+                Update Status
+              </button>
+            </form>
           </td>
         </tr>
       </tbody>
+      {% endfor %}
     </table>
   </div>
 
-  <!-- Start Edit Data -->
-  <div class="modal" id="modal-edit">
-    <div
-      class="modal-background"
-      onclick="$('#modal-edit').removeClass('is-active')"
-    ></div>
-    <article>
-      <div class="media-content modal-card bg-white p-5 rounded">
-        <div class="form-group mb-4 is-align-items-center">
-          <strong class="mr-2 is-blue">Nama Fasilitas</strong>
-          <input
-            type="text"
-            class="form-control"
-            name="sosial-media"
-            id="sosial-media"
-            value=""
-            readonly
-          />
+  <div class="modal-content">
+    <article class="box">
+      <div class="media-content">
+        <div class="field">
+          <label class="label" for="input-pic">Foto sampul</label>
+          <div class="control is-expanded">
+            <div class="file has-name">
+              <label class="file-label" style="width: 100%">
+                <input
+                  id="input-cover"
+                  class="file-input"
+                  type="file"
+                  name="resume"
+                />
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span class="file-label">Select a file</span>
+                </span>
+                <span
+                  id="file-name"
+                  class="file-name"
+                  style="width: 100%; max-width: 100%"
+                >
+                  {{user_info.cover_pic}}
+                </span>
+              </label>
+            </div>
+          </div>
         </div>
 
         <div class="field">
-          <th>
-            <label for="tipeSelect" class="visually-hidden"
-              >Jenis Fasilitas</label
-            >
-            <select class="form-select" id="tipeSelect" name="tipe">
-              <option selected disabled>Jenis Fasilitas</option>
-              <option value="playground">Playground</option>
-              <option value="lapangan">Lapangan Olahraga</option>
-              <option value="tempatibadah">Tempat Ibadah</option>
-              <option value="pos">Pos Keamanan</option>
-              <option value="pagar">Pagar Kawasan</option>
-            </select>
-          </th>
-        </div>
-
-        <div class="field">
-          <label class="label" for="textarea-about">Deskripsi Fasilitas</label>
-          <p class="control">
-            <textarea
-              id="textarea-deskripsi"
-              class="textarea"
-              placeholder="Deskripsi usaha"
-            >
-            </textarea>
-          </p>
-        </div>
-
-        <div class="field">
-          <label class="label" for="input-pic">Foto Fasilitas</label>
+          <label class="label" for="input-pic">Foto profil</label>
           <div class="control is-expanded">
             <div class="file has-name">
               <label class="file-label" style="width: 100%">
@@ -142,10 +133,38 @@
                   class="file-name"
                   style="width: 100%; max-width: 100%"
                 >
+                  {{user_info.profile_pic}}
                 </span>
               </label>
             </div>
           </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="input-sosial-media"
+            >Sosial media (instagram)</label
+          >
+          <p class="control">
+            <input
+              id="input-sosial-media"
+              class="input"
+              placeholder="Sosial media (instagram)"
+              value="{{user_info.sosial_media}}"
+            />
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="textarea-about">Deskripsi usaha</label>
+          <p class="control">
+            <textarea
+              id="textarea-deskripsi"
+              class="textarea"
+              placeholder="Deskripsi usaha"
+            >
+{{user_info.deskripsi_usaha}}
+            </textarea>
+          </p>
         </div>
 
         <nav class="level is-mobile">
@@ -173,6 +192,5 @@
       </div>
     </article>
   </div>
-  <!-- End Edit Data -->
 </div>
 {% endblock %}
