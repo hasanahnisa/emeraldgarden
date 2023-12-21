@@ -5,7 +5,6 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import hashlib
-from bson import ObjectId
 import jwt
 from werkzeug.utils import secure_filename
 

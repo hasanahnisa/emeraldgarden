@@ -10,3 +10,7 @@ header {
     background-color: #83bd75;
     color: white;
   }
+  .carousel-item img {
+    opacity: 0.6;
+  }
+  
