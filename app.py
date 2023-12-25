@@ -128,7 +128,6 @@ def tambahFasilitas():
    else:
       return render_template('login.html',msg="token tidak ada")
 
-
 @app.route('/perbarui/fasilitas', methods=['POST'])
 def perbaruiFasilitas():
    msg = request.args.get('msg')
@@ -171,17 +170,14 @@ def perbaruiFasilitas():
                            file_path = f"gambar_fasilitas/{nama}_{date}.{extension}"
                            file.save(os.path.join(os.getcwd(), 'static', file_path))
                            fasilitas["gambar"] = file_path
-                        else:
-                           fasilitas["gambar"] = ''  # Atau sesuaikan dengan logika yang Anda inginkan
-                           
-                        
-                        if gambar_lama:
-                           gambar_path = os.path.join(os.getcwd(), 'static', gambar_lama)
-                           try:
-                                 if os.path.exists(gambar_path):
-                                    os.remove(gambar_path)
-                           except Exception as e:
-                                 print(f"Error deleting old file: {e}")
+                           if gambar_lama:
+                              gambar_path = os.path.join(os.getcwd(), 'static', gambar_lama)
+                              try:
+                                    if os.path.exists(gambar_path):
+                                       os.remove(gambar_path)
+                              except Exception as e:
+                                    print(f"Error deleting old file: {e}")
+                              
                         # Simpan perubahan ke MongoDB
                         db.fasilitas.update_one({'_id': id_fasilitas}, {'$set': fasilitas})
                         
@@ -262,10 +258,12 @@ def adminProduk():
                algorithms=['HS256']
             )
             user_info = db.admin.find_one({'username':payload['id']})
+            produk = db.produk.find()
+            data_produk = list(produk)
          
             
             if user_info:
-               return render_template('adm-produk.html',user_info=user_info)
+               return render_template('adm-produk.html',user_info=user_info, data_produk=data_produk)
             else:
                return render_template('login.html')
                
@@ -277,6 +275,173 @@ def adminProduk():
             return redirect(url_for('login', msg=msg))
    else:
       return render_template('login.html',msg="token tidak ada")
+
+@app.route('/tambah/produk',  methods=['POST'])
+def tambahProduk():
+   msg = request.args.get('msg')
+   token_receive = request.cookies.get(TOKEN_KEY)
+   date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+   if token_receive:
+      try:
+            payload = jwt.decode(
+               token_receive,
+               SECRET_KEY,
+               algorithms=['HS256']
+            )
+            user_info = db.admin.find_one({'username':payload['id']})
+         
+            
+            if user_info:
+               if request.method == 'POST':
+                  # Ambil data dari form
+                  tipe = request.form['tipe']
+                  deskripsi = request.form['deskripsi']
+                  
+                  doc = {
+                     "tipe": tipe,
+                     "deskripsi": deskripsi,
+                  }
+                  
+                  if "gambar_produk" in request.files and request.files["gambar_produk"].filename:
+                     file = request.files["gambar_produk"]
+                     filename = secure_filename(file.filename)
+                     extension = filename.split(".")[-1]
+                     file_path = f"gambar_produk/{tipe}_{date}.{extension}"
+                     file.save(os.path.join(os.getcwd(), 'static', file_path))
+                     doc["gambar"] = file_path
+                  else:
+                     doc["gambar"] = ''
+
+                  # Tambahkan data baru ke MongoDB
+                  db.produk.insert_one(doc)
+
+                  return redirect(url_for('adminProduk'))
+               
+            else:
+               return render_template('login.html')
+               
+      except jwt.ExpiredSignatureError:
+            msg='Your token has expired'
+            return redirect(url_for('login', msg=msg))
+      except jwt.exceptions.DecodeError:
+            msg='There was a problem logging you in'
+            return redirect(url_for('login', msg=msg))
+   else:
+      return render_template('login.html',msg="token tidak ada")
+
+@app.route('/perbarui/produk', methods=['POST'])
+def perbaruiProduk():
+   msg = request.args.get('msg')
+   token_receive = request.cookies.get(TOKEN_KEY)
+   date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+   if token_receive:
+      try:
+            payload = jwt.decode(
+               token_receive,
+               SECRET_KEY,
+               algorithms=['HS256']
+            )
+            user_info = db.admin.find_one({'username':payload['id']})
+         
+            
+            if user_info:
+               if request.method == 'POST':
+                  id = request.form['id']
+                  tipe = request.form['tipe']
+                  deskripsi = request.form['deskripsi']
+
+                  # Ambil ID produk dari parameter URL
+                  id_produk = ObjectId(id)
+
+                  # Ambil dokumen produk yang akan diperbarui
+                  produk = db.produk.find_one({'_id': id_produk})
+                  
+                  if produk:
+                        # Perbarui data pada dokumen produk
+                        produk["tipe"] = tipe
+                        produk["deskripsi"] = deskripsi
+                        gambar_lama = produk.get('gambar', '')
+                        # Perbarui gambar jika ada file yang diunggah
+                        if "gambar_produk" in request.files and request.files["gambar_produk"].filename:
+                           file = request.files["gambar_produk"]
+                           filename = secure_filename(file.filename)
+                           extension = filename.split(".")[-1]
+                           file_path = f"gambar_produk/{tipe}_{date}.{extension}"
+                           file.save(os.path.join(os.getcwd(), 'static', file_path))
+                           produk["gambar"] = file_path
+                           if gambar_lama:
+                              gambar_path = os.path.join(os.getcwd(), 'static', gambar_lama)
+                              try:
+                                    if os.path.exists(gambar_path):
+                                       os.remove(gambar_path)
+                              except Exception as e:
+                                    print(f"Error deleting old file: {e}")
+                              
+                        # Simpan perubahan ke MongoDB
+                        db.produk.update_one({'_id': id_produk}, {'$set': produk})
+                        
+                        return redirect(url_for('adminProduk'))
+            else:
+               return render_template('login.html')
+               
+      except jwt.ExpiredSignatureError:
+            msg='Your token has expired'
+            return redirect(url_for('login', msg=msg))
+      except jwt.exceptions.DecodeError:
+            msg='There was a problem logging you in'
+            return redirect(url_for('login', msg=msg))
+   else:
+      return render_template('login.html',msg="token tidak ada")   
+   
+@app.route('/hapus/produk/<id_produk>')
+def hapusProduk(id_produk):
+   msg = request.args.get('msg')
+   token_receive = request.cookies.get(TOKEN_KEY)
+
+   if token_receive:
+      try:
+            payload = jwt.decode(
+               token_receive,
+               SECRET_KEY,
+               algorithms=['HS256']
+            )
+            user_info = db.admin.find_one({'username':payload['id']})
+            produk = db.produk.find_one({'_id':ObjectId(id_produk)})
+            
+            if produk:
+               if user_info:
+                  if 'gambar' in produk:
+                     gambar_path = os.path.join(os.getcwd(), 'static', produk['gambar'])
+                     if os.path.exists(gambar_path):
+                        os.remove(gambar_path)
+                     db.produk.delete_one({'_id':ObjectId(id_produk)})
+                     return redirect(url_for('adminFasilitas'))
+               else:
+                  return render_template('login.html')
+               
+      except jwt.ExpiredSignatureError:
+            msg='Your token has expired'
+            return redirect(url_for('login', msg=msg))
+      except jwt.exceptions.DecodeError:
+            msg='There was a problem logging you in'
+            return redirect(url_for('login', msg=msg))
+   else:
+      return render_template('login.html',msg="token tidak ada")   
+
+@app.route('/get_produk/<id_produk>', methods=['GET'])
+def get_produk(id_produk):
+   produk = db.produk.find_one({'_id': ObjectId(id_produk)})
+   print(produk)
+   
+   if produk:
+      return jsonify({
+         '_id': str(produk['_id']),
+         'tipe': produk['tipe'],
+         'deskripsi': produk['deskripsi'],
+         'gambar': produk['gambar'] if 'gambar' in produk else None
+      })
+   else:
+      return jsonify({'error': 'Produk not found'}), 404
 
 @app.route('/about')
 def about():
