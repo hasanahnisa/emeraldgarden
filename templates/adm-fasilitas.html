@@ -1,101 +1,98 @@
-{% extends 'base.html' %} {% block body %}
-<h1>{{ msg }}</h1>
-<div class="d-flex flex-row" style="height: 100%">
-  <div class="bg-light" style="height: 100%; min-height: 1000px">
-    <div
-      class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100"
-      style="width: 280px"
-    >
-      <a
-        href="/"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
-      >
-        <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4">Menu</span>
-      </a>
-      <hr />
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a
-            href="/admin/fasilitas"
-            class="nav-link active"
-            aria-current="page"
+{% extends 'base_admin.html' %} 
+
+{% block admin_head %}
+<style>
+  .post-image {
+      max-width: 100px;
+      max-height: 100px;
+      width: 100px;
+      object-fit: cover;
+      cursor: pointer;
+      /* Add pointer cursor to indicate clickability */
+  }
+
+  /* Add a class for the full-size view */
+  .full-size-image {
+      max-width: 100%;
+      max-height: none;
+      width: 100%;
+      height: auto;
+  }
+</style>
+{% endblock %}
+{% block admin_body %}
+<div class="flex-grow-1 p-3">
+  <button
+            class="btn btn-primary"
+            onclick="$('#modal-add').addClass('is-active')"
           >
-            <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#home"></use>
-            </svg>
-            Fasilitas
-          </a>
-        </li>
-        <li>
-          <a href="/admin/produk" class="nav-link link-dark">
-            <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#speedometer2"></use>
-            </svg>
-            Produk
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+            Tambah Data
+          </button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Fasilitas</th>
+        <th>Jenis Fasilitas</th>
+        <th>Deskripsi</th>
+        <th>Foto</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for fasilitas in data_fasilitas %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ fasilitas.nama }}</td>
+        <td>{{ fasilitas.jenis }}</td>
+        <td>{{ fasilitas.deskripsi }}</td>
+        <td>
+          {% if fasilitas.gambar is defined and fasilitas.gambar != '' %}
+          <img class="post-image"
+          src="../static/{{ fasilitas.gambar }}"
+          alt="gambar fasilitas">
+          {% else %}
+          <img class="post-image"
+          src="../static/no_image.jpg"
+          alt="gambar fasilitas">
+          {% endif %}  
+        </td>
 
-  <div class="flex-grow-1 p-3">
-    <button
-              class="btn btn-primary"
-              onclick="$('#modal-add').addClass('is-active')"
-            >
-              Tambah Data
-            </button>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama Fasilitas</th>
-          <th>Jenis Fasilitas</th>
-          <th>Deskripsi</th>
-          <th>Foto</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <!-- <button
-              class="btn btn-primary"
-              onclick="$('#modal-edit').addClass('is-active')"
-            >
-              Edit
-            </button> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <td>
+          <button
+          class="btn btn-primary"
+          data-id="{{ fasilitas._id }}" 
+          onclick="editFasilitas(this)"
+          >
+            Edit
+          </button>
+          <a href="/hapus/fasilitas/{{ fasilitas._id }}" id="delete" class="btn btn-danger">Hapus</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-  <!-- Start Edit Data -->
-  <div class="modal" id="modal-edit">
-    <div
-      class="modal-background"
-      onclick="$('#modal-edit').removeClass('is-active')"
-    ></div>
-    <article>
-      <div class="media-content modal-card bg-white p-5 rounded">
+<!-- Start Edit Data -->
+<div class="modal" id="modal-edit">
+  <div
+    class="modal-background"
+    onclick="$('#modal-edit').removeClass('is-active')"
+  ></div>
+  <article>
+    <form action="/perbarui/fasilitas" method="post" enctype="multipart/form-data">
+      <div class="media-content modal-card bg-white p-5 rounded overflow-scroll">
         <div class="form-group mb-4 is-align-items-center">
+          <input type="hidden" name="id" value="">
           <strong class="mr-2 is-blue">Nama Fasilitas</strong>
           <input
             type="text"
             class="form-control"
-            name="sosial-media"
-            id="sosial-media"
+            name="nama_fasilitas"
+            id="sosial-media_edit"
             value=""
-            readonly
+        
           />
         </div>
 
@@ -104,7 +101,111 @@
             <label for="tipeSelect" class="visually-hidden"
               >Jenis Fasilitas</label
             >
-            <select class="form-select" id="tipeSelect" name="tipe">
+            <select class="form-select" id="tipeSelect_edit" name="jenis_fasilitas">
+              <option selected disabled>Jenis Fasilitas</option>
+              <option value="playground">Playground</option>
+              <option value="lapangan">Lapangan Olahraga</option>
+              <option value="tempatibadah">Tempat Ibadah</option>
+              <option value="pos">Pos Keamanan</option>
+              <option value="pagar">Pagar Kawasan</option>
+            </select>
+          </th>
+        </div>
+
+        <div class="field">
+          <label class="label" for="textarea-about">Deskripsi Fasilitas</label>
+          <p class="control">
+            <textarea
+              id="textarea-deskripsi_edit"
+              class="textarea"
+              placeholder="Deskripsi usaha"
+              name="deskripsi_fasilitas"
+            ></textarea>
+          </p>
+        </div>
+
+        <div class="field">
+          <div class="control is-expanded">
+            <div class="file has-name">
+              
+              <div class="mb-3">
+                <label for="gambarFasilitas" class="label">Gambar Fasilitas</label>
+                <input type="file" class="form-control" id="image_edit" autocomplete="off" name="gambar_fasilitas" />
+              </div>
+  
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control is-expanded">
+            <div class="file has-name">
+              
+             <div class="row mb-3">
+                <label for="gambarFasilitas" class="form-label"></label>
+                <img id="showImage_edit" class="wd-200 rounded mb-4"
+                    src="../static/no_image.jpg"
+                    alt="gambar fasilitas">
+            </div>
+  
+            </div>
+          </div>
+        </div>
+
+        <nav class="level is-mobile">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <button
+              type="submit"
+                class="button is-button-blue is-bold"
+              >
+                Perbarui</button
+              >
+            </div>
+
+            <div class="level-item">
+              <a
+                class="button is-button-red"
+                onclick="$('#modal-edit').removeClass('is-active')"
+              >
+                Batal</a
+              >
+            </div>
+          </div>
+        </nav>
+        </form>
+  </article>
+</div>
+<!-- End Edit Data -->
+
+  <!-- Start Add Data -->
+<div class="modal" id="modal-add">
+    <div
+      class="modal-background"
+      onclick="$('#modal-add').removeClass('is-active')"
+    ></div>
+    <article>
+      <form action="/tambah/fasilitas" method="post" enctype="multipart/form-data">
+      <div class="media-content modal-card bg-white p-5 rounded overflow-scroll">
+        <div class="form-group mb-4 is-align-items-center">
+          <strong class="mr-2 is-blue">Nama Fasilitas</strong>
+          <input
+            type="text"
+            class="form-control"
+            name="nama_fasilitas"
+            id="sosial-media"
+            value=""
+        
+          />
+        </div>
+
+        <div class="field">
+          <th>
+            <label for="tipeSelect" class="visually-hidden"
+              >Jenis Fasilitas</label
+            >
+            <select class="form-select" id="tipeSelect" name="jenis_fasilitas">
               <option selected disabled>Jenis Fasilitas</option>
               <option value="playground">Playground</option>
               <option value="lapangan">Lapangan Olahraga</option>
@@ -122,35 +223,35 @@
               id="textarea-deskripsi"
               class="textarea"
               placeholder="Deskripsi usaha"
-            >
-            </textarea>
+              name="deskripsi_fasilitas"
+            ></textarea>
           </p>
         </div>
 
         <div class="field">
-          <label class="label" for="input-pic">Foto Fasilitas</label>
           <div class="control is-expanded">
             <div class="file has-name">
-              <label class="file-label" style="width: 100%">
-                <input
-                  id="input-profile"
-                  class="file-input"
-                  type="file"
-                  name="resume"
-                />
-                <span class="file-cta">
-                  <span class="file-icon">
-                    <i class="fa fa-upload"></i>
-                  </span>
-                  <span class="file-label">Select a file</span>
-                </span>
-                <span
-                  id="file-name"
-                  class="file-name"
-                  style="width: 100%; max-width: 100%"
-                >
-                </span>
-              </label>
+              
+              <div class="mb-3">
+                <label for="gambarFasilitas" class="label">Gambar Fasilitas</label>
+                <input type="file" class="form-control" id="image" autocomplete="off" name="gambar_fasilitas" />
+              </div>
+  
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control is-expanded">
+            <div class="file has-name">
+              
+             <div class="row mb-3">
+                <label for="gambarFasilitas" class="form-label"></label>
+                <img id="showImage" class="wd-200 rounded mb-4"
+                    src="../static/no_image.jpg"
+                    alt="gambar fasilitas">
+            </div>
+  
             </div>
           </div>
         </div>
@@ -159,135 +260,86 @@
           <div class="level-left"></div>
           <div class="level-right">
             <div class="level-item">
-              <a
+              <button
+              type="submit"
                 class="button is-button-blue is-bold"
-                onclick="update_profile()"
               >
-                Perbarui</a
+                Tambah</button
               >
             </div>
 
             <div class="level-item">
               <a
                 class="button is-button-red"
-                onclick="$('#modal-edit').removeClass('is-active')"
+                onclick="$('#modal-add').removeClass('is-active')"
               >
                 Batal</a
               >
             </div>
           </div>
         </nav>
+        </form>
       </div>
     </article>
   </div>
-  <!-- End Edit Data -->
-
-    <!-- Start Add Data -->
-    <div class="modal" id="modal-add">
-      <div
-        class="modal-background"
-        onclick="$('#modal-add').removeClass('is-active')"
-      ></div>
-      <article>
-        <div class="media-content modal-card bg-white p-5 rounded">
-          <div class="form-group mb-4 is-align-items-center">
-            <strong class="mr-2 is-blue">Nama Fasilitas</strong>
-            <input
-              type="text"
-              class="form-control"
-              name="sosial-media"
-              id="sosial-media"
-              value=""
-          
-            />
-          </div>
-  
-          <div class="field">
-            <th>
-              <label for="tipeSelect" class="visually-hidden"
-                >Jenis Fasilitas</label
-              >
-              <select class="form-select" id="tipeSelect" name="tipe">
-                <option selected disabled>Jenis Fasilitas</option>
-                <option value="playground">Playground</option>
-                <option value="lapangan">Lapangan Olahraga</option>
-                <option value="tempatibadah">Tempat Ibadah</option>
-                <option value="pos">Pos Keamanan</option>
-                <option value="pagar">Pagar Kawasan</option>
-              </select>
-            </th>
-          </div>
-  
-          <div class="field">
-            <label class="label" for="textarea-about">Deskripsi Fasilitas</label>
-            <p class="control">
-              <textarea
-                id="textarea-deskripsi"
-                class="textarea"
-                placeholder="Deskripsi usaha"
-              ></textarea>
-            </p>
-          </div>
-  
-          <div class="field">
-            <label class="label" for="input-pic">Foto Fasilitas</label>
-            <div class="control is-expanded">
-              <div class="file has-name">
-                <label class="file-label" style="width: 100%">
-                  <input
-                    id="input-profile"
-                    class="file-input"
-                    type="file"
-                    name="resume"
-                  />
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fa fa-upload"></i>
-                    </span>
-                    <span class="file-label">Select a file</span>
-                  </span>
-                  <span
-                    id="file-name"
-                    class="file-name"
-                    style="width: 100%; max-width: 100%"
-                  >
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-  
-          <nav class="level is-mobile">
-            <div class="level-left"></div>
-            <div class="level-right">
-              <div class="level-item">
-                <a
-                  class="button is-button-blue is-bold"
-                  onclick="update_profile()"
-                >
-                  Perbarui</a
-                >
-              </div>
-  
-              <div class="level-item">
-                <a
-                  class="button is-button-red"
-                  onclick="$('#modal-add').removeClass('is-active')"
-                >
-                  Batal</a
-                >
-              </div>
-            </div>
-          </nav>
-        </div>
-      </article>
-    </div>
-    <!-- End Add Data -->
-</div>
+  <!-- End Add Data -->
 {% endblock %}
 
-{% block script %}
-  <script>
+{% block admin_script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+        $('#menu_fasilitas').addClass('active')
+        $('#menu_produk').removeClass('active')
+        $('#menu_produk').addClass('link-dark')
+        $('#menu_fasilitas').removeClass('link-dark')
+        $('.post-image').on('click', function() {
+          $(this).toggleClass('full-size-image');
+        });
 
-  </script>
+        $('#image').change(function(e) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+              $('#showImage').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(e.target.files['0']);
+      });
+
+      
+    });
+
+    function editFasilitas(button) {
+      var id = $(button).data('id');
+    
+      // Panggil rute pada server untuk mendapatkan data fasilitas berdasarkan ID
+      $.ajax({
+        url: '/get_fasilitas/' + id,
+        type: 'GET',
+        success: function(data) {
+          // Isi nilai-nilai formulir dengan data fasilitas yang diperoleh
+          $('#modal-edit input[name="id"]').val(data._id);
+          $('#modal-edit input[name="nama_fasilitas"]').val(data.nama);
+          $('#tipeSelect_edit').val(data.jenis);
+          $('#textarea-deskripsi_edit').val(data.deskripsi);
+    
+          // Hapus atribut 'src' agar gambar tetap ditampilkan bahkan jika gambar tidak ada
+          $('#showImage_edit').removeAttr('src');
+          
+          // Tampilkan gambar jika ada
+          if (data.gambar) {
+            var gambarPath = '../static/' + data.gambar;
+            $('#showImage_edit').attr('src', gambarPath);
+          }else{
+            $('#showImage_edit').attr('src', '../static/no_image.jpg');
+          }
+    
+          // Tampilkan modal edit
+          $('#modal-edit').addClass('is-active');
+        },
+        error: function(error) {
+          console.error('Error:', error);
+        }
+      });
+    }
+    </script>
 {% endblock %}
