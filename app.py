@@ -512,9 +512,48 @@ def sign_in():
             }
         )
       
-@app.route('/produk')
-def produk():
-   return render_template('produk.html')
+@app.route('/produk30')
+def produk30():
+   return render_template('produk30.html')
+
+@app.route('/produk36')
+def produk36():
+   return render_template('produk36.html')
+
+@app.route('/produk60')
+def produk60():
+   return render_template('produk60.html')
+
+@app.route('/produkkavling')
+def produkkavling():
+   return render_template('produkkavling.html')
+
+@app.route('/register_save', methods=['POST'])
+def register_save():
+    username_receive = request.form["username_give"]
+    password_receive = request.form["password_give"]
+    password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+
+    doc = {
+        "username" : username_receive,
+        "password" : password_hash,
+        "registration_time": datetime.now()
+    }
+    db.users.insert_one(doc)
+    db.users.create_index([("registration_time", -1)]) 
+    return jsonify({'result':'success'})
+
+@app.route('/sign_up/check_dup', methods=['POST']) 
+def check_dup():
+     username_receive = request.form.get('username_give')
+     user = db.users.find_one({'username' : username_receive})
+     exists = bool(user)
+     return jsonify({'result':'success', 'exists' : exists})
+
+@app.route('/register',methods=['GET'])
+def register():
+    return render_template("register.html")
+
 
 if __name__ == '__main__':
    app.run('0.0.0.0', port=5000, debug=True)

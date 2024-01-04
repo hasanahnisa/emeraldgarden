@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,6 @@
     />
   </head>
   <body>
-   
     <section
       class="align-middle w-100"
       style="
@@ -27,8 +26,43 @@
           <div class="card rounded">
             <div class="card-body">
               <div class="container mt-4 px-5 py-3">
+                <ul
+                  class="nav nav-pills mb-3 mx-auto align-content-center justify-content-center border rounded"
+                  id="pills-tab"
+                >
+                  <li class="nav-item w-50" role="presentation">
+                    <button
+                      class="btn btn-light w-100"
+                      type="button"
+                      style="border: none; background-color: #1a5d1a"
+                    >
+                      <a
+                        href="/register"
+                        style="
+                          text-decoration: none;
+                          color: white;
+                          cursor: default;
+                        "
+                        >Daftar</a
+                      >
+                    </button>
+                  </li>
+                  <li class="nav-item w-50" role="presentation">
+                    <button
+                      class="btn btn-light w-100"
+                      type="button"
+                      style="border: none"
+                    >
+                      <a
+                        href="/login"
+                        style="text-decoration: none; color: #1a5d1a"
+                      >
+                        <span style="color: #1a5d1a">Masuk</span>
+                      </a>
+                    </button>
+                  </li>
+                </ul>
 
-                <h3><center>Login</center></h2><br/>
                 <div class="tab-content" id="pills-tabContent">
                   <div
                     class="tab-pane fade show active"
@@ -36,32 +70,30 @@
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
                   >
-  
-                      <div class="form-group mb-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="Username"
-                          id="input_user"
-                        />
-                      </div>
-                      <div class="form-group mb-3">
-                        <input
-                          type="password"
-                          class="form-control"
-                          placeholder="Password"
-                          id="input_pass"
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        onclick="sign_in()"
-                        class="btn text-white mx-auto d-block px-4"
-                        style="background-color: green"
-                      >
-                        Masuk Sebagai Admin
-                      </button>
-           
+                    <div class="form-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Username"
+                        id="input_user"
+                      />
+                    </div>
+                    <div class="form-group mb-3">
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Password"
+                        id="input_pass"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      onclick="sign_in()"
+                      class="btn text-white mx-auto d-block px-4"
+                      style="background-color: green"
+                    >
+                      Masuk Sebagai Admin
+                    </button>
                   </div>
                 </div>
               </div>
@@ -76,15 +108,18 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script>
-     
       function sign_in() {
         let username = $("#input_user").val();
         let password = $("#input_pass").val();
-    
+
         if (username === "") {
           $("#help-user-login").text("Please input your username.");
           $("#input_user").focus();
@@ -92,7 +127,7 @@
         } else {
           $("#help-user-login").text("");
         }
-    
+
         if (password === "") {
           $("#help-password").text("Please input your password.");
           $("#input_pass").focus();
@@ -110,12 +145,11 @@
           success: function (response) {
             if (response["result"] === "success") {
               $.cookie("my_token", response["token"], { path: "/" });
-              swal("Success","Login successful!", "success");
-    
+              swal("Success", "Login successful!", "success");
+
               window.location.replace("/admin/fasilitas");
             } else {
-              swal("Failed",response["msg"], "error");
-    
+              swal("Failed", response["msg"], "error");
             }
           },
         });
