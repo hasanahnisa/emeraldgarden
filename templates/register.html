@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nourish Connection</title>
+    <title>Emerald Garden</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -32,6 +32,8 @@
     <!-- AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Pastikan Anda menyertakan jQuery sebelum skrip JavaScript Anda -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <!-- Font Awesome -->
     <link
@@ -75,14 +77,14 @@
         } else if (!is_password(password)) {
           helpPassword
             .text(
-              "Untuk password kamu, masukkan 8-20 karaket,nomor, atau menggunakan special characters (!@#$%^&*)",
+              "Untuk password kamu, masukkan 8-20 karakter,nomor, atau menggunakan special characters (!@#$%^&*)",
             )
             .removeClass("is-blue")
             .addClass("is-danger");
           return;
         } else {
           helpPassword
-            .text("Pasword bisa digunakan!!!")
+            .text("Password bisa digunakan!!!")
             .removeClass("is-danger")
             .addClass("is-success");
         }
@@ -102,16 +104,6 @@
           return;
         } else {
           helpPassword2.text("").removeClass("is-hidden").addClass("is-danger");
-        }
-
-        if (namaUsaha === "") {
-          helpNamaUsaha
-            .text("Masukkan nama usaha kamu")
-            .removeClass("is-hidden")
-            .addClass("is-danger");
-          return;
-        } else {
-          helpNamaUsaha.text("").removeClass("is-hidden").addClass("is-danger");
         }
 
         $.ajax({
@@ -193,7 +185,7 @@
               inputUsername.focus();
             } else {
               helpId
-                .text("Username ini bisa diguanakan!")
+                .text("Username ini bisa digunakan!")
                 .removeClass("is-danger")
                 .addClass("is-success");
             }
@@ -313,7 +305,7 @@
                       <p id="help-password2" class="help mb-2 is-hidden"></p>
                       <button
                         type="submit"
-                        onclick=""
+                        onclick="daftar()"
                         class="btn text-white mx-auto d-block px-4"
                         style="background-color: green"
                       >

@@ -22,21 +22,112 @@ client = MongoClient(MONGODB_CONNECTION_STRING)
 db = client[DB_NAME]
 TOKEN_KEY = 'my_token'
 
-def insert_admin():
-   doc = {
-            "username": "admin",                               
-            "name": "admin",                               
-            "photo": "admin.jpg",                               
-            "password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",                                                                                   
-            }
-   find_admin = db.admin.find_one({'username':'admin'})
-   if find_admin:
-      return "sudah ada"
-   else:
-      db.admin.insert_one(doc)
-      return "berhasil"
+def insert_admin(username, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-insert_admin()
+    doc = {
+        "username": username,
+        "password": hashed_password,
+    }
+
+    find_admin = db.admin.find_one({'username': username})
+    
+    if find_admin:
+        return "Admin sudah ada"
+    else:
+        db.admin.insert_one(doc)
+        return "Admin berhasil ditambahkan"
+    
+@app.route('/login')
+def login():
+   msg = request.args.get('msg')
+   token_receive = request.cookies.get(TOKEN_KEY)
+   if msg:
+      return render_template('login.html',msg=msg)
+   else:
+      if token_receive:
+         try:
+               payload = jwt.decode(
+                  token_receive,
+                  SECRET_KEY,
+                  algorithms=['HS256']
+               )
+               user_info = db.admin.find_one({'username':payload.get('id')})
+            
+               
+               if user_info:
+                  return render_template('adm-fasilitas.html',user_info=user_info)
+               else:
+                  return render_template('login.html')
+                  
+         except jwt.ExpiredSignatureError:
+               msg='Your token has expired'
+               return redirect(url_for('login', msg=msg))
+         except jwt.exceptions.DecodeError:
+               msg='There was a problem logging you in'
+               return redirect(url_for('login', msg=msg))
+      else:
+         return render_template('login.html',msg=msg)
+      
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+   username_receive = request.form["username_give"]
+   password_receive = request.form["password_give"]
+   print(username_receive)
+   pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+   result = db.admin.find_one(
+      {
+         "username": username_receive,
+         "password": pw_hash,
+      }
+   )
+   
+   if result:
+      payload = {
+         "id": username_receive,
+         "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
+      }
+      token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+      return jsonify(
+            {
+                "result": "success",
+                "token": token,
+            }
+        )
+   else:
+      return jsonify(
+            {
+                "result": "fail",
+                "msg": "We could not find a user with that id/password combination",
+            }
+        )
+   
+@app.route('/register_save', methods=['POST'])
+def register_save():
+    username_receive = request.form["username_give"]
+    password_receive = request.form["password_give"]
+    password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+
+    doc = {
+        "username" : username_receive,
+        "password" : password_hash,
+        "registration_time": datetime.now()
+    }
+    db.admin.insert_one(doc)
+    db.admin.create_index([("registration_time", -1)]) 
+    return jsonify({'result':'success'})
+
+@app.route('/sign_up/check_dup', methods=['POST']) 
+def check_dup():
+     username_receive = request.form.get('username_give')
+     user = db.admin.find_one({'username' : username_receive})
+     exists = bool(user)
+     return jsonify({'result':'success', 'exists' : exists})
+
+@app.route('/register',methods=['GET'])
+def register():
+    return render_template("register.html")
 
 @app.route('/')
 def home():
@@ -446,71 +537,6 @@ def get_produk(id_produk):
 @app.route('/about')
 def about():
    return render_template('about.html')
-
-@app.route('/login')
-def login():
-   msg = request.args.get('msg')
-   token_receive = request.cookies.get(TOKEN_KEY)
-   if msg:
-      return render_template('login.html',msg=msg)
-   else:
-      if token_receive:
-         try:
-               payload = jwt.decode(
-                  token_receive,
-                  SECRET_KEY,
-                  algorithms=['HS256']
-               )
-               user_info = db.admin.find_one({'username':payload.get('id')})
-            
-               
-               if user_info:
-                  return render_template('adm-fasilitas.html',user_info=user_info)
-               else:
-                  return render_template('login.html')
-                  
-         except jwt.ExpiredSignatureError:
-               msg='Your token has expired'
-               return redirect(url_for('login', msg=msg))
-         except jwt.exceptions.DecodeError:
-               msg='There was a problem logging you in'
-               return redirect(url_for('login', msg=msg))
-      else:
-         return render_template('login.html',msg=msg)
-      
-@app.route('/sign_in', methods=['POST'])
-def sign_in():
-   username_receive = request.form["username_give"]
-   password_receive = request.form["password_give"]
-   print(username_receive)
-   pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
-   result = db.admin.find_one(
-      {
-         "username": username_receive,
-         "password": pw_hash,
-      }
-   )
-   
-   if result:
-      payload = {
-         "id": username_receive,
-         "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
-      }
-      token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-
-      return jsonify(
-            {
-                "result": "success",
-                "token": token,
-            }
-        )
-   else:
-      return jsonify(
-            {
-                "result": "fail",
-                "msg": "We could not find a user with that id/password combination",
-            }
-        )
       
 @app.route('/produk30')
 def produk30():
@@ -527,32 +553,6 @@ def produk60():
 @app.route('/produkkavling')
 def produkkavling():
    return render_template('produkkavling.html')
-
-@app.route('/register_save', methods=['POST'])
-def register_save():
-    username_receive = request.form["username_give"]
-    password_receive = request.form["password_give"]
-    password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
-
-    doc = {
-        "username" : username_receive,
-        "password" : password_hash,
-        "registration_time": datetime.now()
-    }
-    db.users.insert_one(doc)
-    db.users.create_index([("registration_time", -1)]) 
-    return jsonify({'result':'success'})
-
-@app.route('/sign_up/check_dup', methods=['POST']) 
-def check_dup():
-     username_receive = request.form.get('username_give')
-     user = db.users.find_one({'username' : username_receive})
-     exists = bool(user)
-     return jsonify({'result':'success', 'exists' : exists})
-
-@app.route('/register',methods=['GET'])
-def register():
-    return render_template("register.html")
 
 
 if __name__ == '__main__':

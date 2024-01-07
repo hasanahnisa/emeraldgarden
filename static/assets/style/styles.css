@@ -14,3 +14,15 @@ header {
     opacity: 0.6;
   }
   
+  .card img {
+    height: 500%;
+  }
+
+  .card-text {
+    font-size: 15px;
+    margin-top: 3%;
+  }
+
+  .card-body h3 {
+    font-size: 20px;
+  }
