@@ -33,7 +33,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <!-- Pastikan Anda menyertakan jQuery sebelum skrip JavaScript Anda -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
     <!-- Font Awesome -->
     <link
@@ -102,8 +102,6 @@
             .addClass("is-danger");
           inputPassword2.focus();
           return;
-        } else {
-          helpPassword2.text("").removeClass("is-hidden").addClass("is-danger");
         }
 
         $.ajax({
@@ -116,20 +114,16 @@
           success: function (response) {
             alert("berhasil daftar");
             console.log(response);
-            if (response.result === "success") {
-              window.location.replace("/login");
-            }
-          },
-          error: function (error) {
-            console.log(error);
+            window.location.replace("/login");
+           
           },
         });
       }
 
       function toggle_sign_up() {
-        // $("#div-sign-in-or-up").toggleClass("is-hidden");
-        // $("#sign-up-box").toggleClass("is-hidden");
-        // $("#btn-check-dup").toggleClass("is-hidden");
+        $("#div-sign-in-or-up").toggleClass("is-hidden");
+        $("#sign-up-box").toggleClass("is-hidden");
+        $("#btn-check-dup").toggleClass("is-hidden");
         $("#help-id").toggleClass("is-hidden");
         $("#help-password").toggleClass("is-hidden");
         $("#help-password2").toggleClass("is-hidden");
@@ -193,6 +187,24 @@
           },
         });
       }
+      function togglePassword() {
+        var passwordInput = document.getElementById("password");
+      
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
+      }
+      function togglePassword2() {
+        var passwordInput = document.getElementById("password2");
+      
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
+      }
     </script>
   </head>
 
@@ -255,7 +267,7 @@
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
                   >
-                    <form action="" class="mb-2">
+
                       <div class="form-group d-flex">
                         <input
                           type="text"
@@ -280,7 +292,7 @@
                         Untuk username kamu, masukkan 2-10 karakter, nomor, atau
                         menggunakan special characters (._-)
                       </p>
-                      <div class="form-group">
+                      <div class="d-flex form-group">
                         <input
                           type="password"
                           class="form-control"
@@ -288,12 +300,13 @@
                           name="password"
                           id="password"
                         />
+                        <a class="btn text-white mx-auto d-block px-4"  style="background-color: green" onclick="togglePassword()">show</a>
                       </div>
                       <p id="help-password" class="help mb-2 is-blue">
                         Untuk password kamu, masukkan 8-20 karaket,nomor, atau
                         menggunakan special characters (!@#$%^&*)
                       </p>
-                      <div class="form-group mb-3">
+                      <div class="d-flex form-group mb-3">
                         <input
                           type="password"
                           class="form-control"
@@ -301,6 +314,7 @@
                           placeholder="Konfirmasi password anda"
                           id="password2"
                         />
+                        <a class="btn text-white mx-auto d-block px-4"  style="background-color: green" onclick="togglePassword2()">show</a>
                       </div>
                       <p id="help-password2" class="help mb-2 is-hidden"></p>
                       <button
@@ -311,7 +325,6 @@
                       >
                         Daftar Sebagai Admin
                       </button>
-                    </form>
                   </div>
                 </div>
               </div>

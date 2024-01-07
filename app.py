@@ -320,21 +320,29 @@ def hapusFasilitas(id_fasilitas):
    else:
       return render_template('login.html',msg="token tidak ada")   
 
-@app.route('/get_fasilitas/<id_fasilitas>', methods=['GET'])
-def get_fasilitas(id_fasilitas):
-   fasilitas = db.fasilitas.find_one({'_id': ObjectId(id_fasilitas)})
+@app.route('/get_fasilitas', methods=['GET'])
+def get_fasilitas():
+   fasilitas = list(db.fasilitas.find({}))
    print(fasilitas)
+   
+   list_fasilitas = []
+   for data in fasilitas :
+      doc = {
+         '_id': str(data['_id']),
+         'nama': data['nama'],
+         'jenis': data['jenis'],
+         'deskripsi': data['deskripsi'],
+         'gambar': data['gambar'] if 'gambar' in data else None
+      }
+      
+      list_fasilitas.append(doc)
    
    if fasilitas:
       return jsonify({
-         '_id': str(fasilitas['_id']),
-         'nama': fasilitas['nama'],
-         'jenis': fasilitas['jenis'],
-         'deskripsi': fasilitas['deskripsi'],
-         'gambar': fasilitas['gambar'] if 'gambar' in fasilitas else None
+         'fasilitas': list_fasilitas
       })
    else:
-      return jsonify({'error': 'Fasilitas not found'}), 404
+      return jsonify({'error': 'Produk not found'}), 404
 
 @app.route('/admin/produk')
 def adminProduk():
@@ -519,17 +527,25 @@ def hapusProduk(id_produk):
    else:
       return render_template('login.html',msg="token tidak ada")   
 
-@app.route('/get_produk/<id_produk>', methods=['GET'])
-def get_produk(id_produk):
-   produk = db.produk.find_one({'_id': ObjectId(id_produk)})
-   print(produk)
+@app.route('/get_produk', methods=['GET'])
+def get_produk():
+   produks = list(db.produk.find({}))
+   print(produks)
    
-   if produk:
-      return jsonify({
-         '_id': str(produk['_id']),
+   list_produk = []
+   for produk in produks :
+      doc = {
+          '_id': str(produk['_id']),
          'tipe': produk['tipe'],
          'deskripsi': produk['deskripsi'],
          'gambar': produk['gambar'] if 'gambar' in produk else None
+      }
+      
+      list_produk.append(doc)
+   
+   if produk:
+      return jsonify({
+         'produk': list_produk
       })
    else:
       return jsonify({'error': 'Produk not found'}), 404

@@ -52,7 +52,7 @@
   <h1><center>Fasilitas</center></h1>
   <br />
   <div class="container">
-    <div class="row">
+    <div class="row" id="daftar-fasilitas">
       <div class="col-md-3">
         <div class="card shadow-sm" style="height: 500px">
           <img
@@ -229,4 +229,14 @@
 </section>
 
 <!-- End Kantor -->
+{% endblock %}
+
+{% block scriptjs %}
+<script src="../static/assets/js/fasilitas.js"></script>
+<script>
+  $(document).ready(function () {
+    // Ganti id_produk dengan nilai yang sesuai atau ambil dari suatu sumber
+    tampilkanFasilitas();
+  });
+</script>
 {% endblock %}

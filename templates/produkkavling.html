@@ -49,7 +49,7 @@
     <h1><center>Fasilitas</center></h1>
     <br />
     <div class="container">
-      <div class="row">
+      <div class="row" id="daftar-fasilitas">
         <div class="col">
           <div class="card shadow-sm">
             <svg
@@ -166,5 +166,15 @@
     </div>
   </div>
   <!--  End Preview Fasilitas -->
-  {% endblock %}
+
 </section>
+{% endblock %}
+{% block scriptjs %}
+<script src="../static/assets/js/fasilitas.js"></script>
+<script>
+  $(document).ready(function () {
+    // Ganti id_produk dengan nilai yang sesuai atau ambil dari suatu sumber
+    tampilkanFasilitas();
+  });
+</script>
+{% endblock %}
