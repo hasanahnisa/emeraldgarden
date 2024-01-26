@@ -1,242 +1,103 @@
 {% extends 'base.html' %} {% block body %}
-<header
-  class="py-5 bg-image-full"
-  style="
-    background-image: url(&quot;/static/img/about.jpg&quot;);
-    background-size: cover;
-    height: 500px;
-  "
->
-  <div
-    class="d-flex flex-column justify-content-center align-items-center h-100"
-  >
-    <h1 class="text-black fs-3 fw-bolder">Perumahan Emerald Garden</h1>
-    <p class="text-black-50 mb-0">Tentang Kami</p>
-  </div>
+<header class="py-5 bg-image-full" style="background-image: url('/static/img/aabout.jpg'); background-size: cover; height: 620px;">
 </header>
 
+
 <!-- Start Detail About Us -->
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <p class="lead">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6" style="padding: 20px; margin: 20px 0;">
+      <p class="lead" style="margin-top: 5%;">
         Emerald Garden bukan hanya sekadar tempat tinggal; ini merupakan sebuah
         rumah yang memancarkan kehangatan, desain modern minimalis, dan
         fasilitas terbaik untuk memenuhi segala kebutuhan Anda.
       </p>
-      <br />
-      <p class="mb-0">
-        Dengan desain yang dipikirkan secara matang, setiap sudut di Emerald
-        Garden menciptakan suasana yang mengundang, mencerminkan perpaduan
-        antara fungsionalitas dan estetika. Keberadaan fasilitas terbaik tidak
-        hanya menjadi pelengkap, tetapi juga menjadi bagian tak terpisahkan dari
-        pengalaman hidup di sini. Dari kolam renang yang menyegarkan hingga
-        taman bermain anak-anak yang riang, setiap elemen dirancang untuk
-        meningkatkan kualitas hidup Anda. Kami mengundang Anda untuk merasakan
-        kebahagiaan di sini, di tengah-tengah lingkungan yang ramah dan aman.
-        Komitmen kami terhadap keamanan melibatkan penggunaan teknologi keamanan
-        terkini dan tim keamanan yang ahli. Sehingga, di sini, Anda tidak hanya
-        mendapatkan rumah yang indah, tetapi juga tempat yang menyediakan
-        ketenangan pikiran. Dalam setiap langkah yang Anda ambil di dalam
-        Emerald Garden, Anda akan merasakan nuansa kebersamaan dan kenyamanan
-        yang membentuk fondasi dari rumah yang sempurna.
-      </p>
     </div>
-  </div>
-</div>
-
-<!-- End Detail About Us -->
-
-<!-- Start Preview Fasilitas -->
-<div class="album py-5 bg-body-tertiary">
-  <h1><center>Fasilitas</center></h1>
-  <br />
-  <div class="container">
-    <div class="row" id="daftar-fasilitas">
-      <div class="col-md-3">
-        <div class="card shadow-sm" style="height: 500px">
-          <img
-            src="/static/img/tipe30.JPG"
-            class="bd-placeholder-img card-img-top"
-            alt="Placeholder: Thumbnail"
-            style="object-fit: cover; width: 100%; height: 70%"
-          />
-          <div class="col bg-color">
-            <div class="card-body fs-6">
-              <b>Tipe Rumah</b><br />
-              <p class="card-text fs-6">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-success">
-                    Kontak Sekarang
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card shadow-sm" style="height: 500px">
-          <img
-            src="/static/img/tipe30.JPG"
-            class="bd-placeholder-img card-img-top"
-            alt="Placeholder: Thumbnail"
-            style="object-fit: cover; width: 100%; height: 70%"
-          />
-          <div class="col bg-color">
-            <div class="card-body fs-6">
-              <b>Tipe Rumah</b><br />
-              <p class="card-text fs-6">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-success">
-                    Kontak Sekarang
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card shadow-sm" style="height: 500px">
-          <img
-            src="/static/img/tipe30.JPG"
-            class="bd-placeholder-img card-img-top"
-            alt="Placeholder: Thumbnail"
-            style="object-fit: cover; width: 100%; height: 70%"
-          />
-          <div class="col bg-color">
-            <div class="card-body fs-6">
-              <b>Tipe Rumah</b><br />
-              <p class="card-text fs-6">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-success">
-                    Kontak Sekarang
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card shadow-sm" style="height: 500px">
-          <img
-            src="/static/img/tipe30.JPG"
-            class="bd-placeholder-img card-img-top"
-            alt="Placeholder: Thumbnail"
-            style="object-fit: cover; width: 100%; height: 70%"
-          />
-          <div class="col bg-color">
-            <div class="card-body fs-6">
-              <b>Tipe Rumah</b><br />
-              <p class="card-text fs-6">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-success">
-                    Kontak Sekarang
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!--  End Preview Fasilitas -->
-
-<!-- Start Siteplan -->
-<div class="text-center d-flex flex-column align-items-center">
-  <h2>Siteplan Emerald Garden</h2>
-  <br />
-  <img
-    class="img-fluid mx-auto"
-    src="/static/img/siteplan.jpg"
-    alt="Siteplan"
-    style="width: 3000px; height: 990px"
-  />
-</div>
-
-<!-- End Siteplan -->
-
-<!-- Start Kantor -->
-
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6">
-        <h2>Kunjungi Kantor Pemasaran Kami</h2>
-        <p>
-          Jl. Kyai Parseh Jaya No.01, Bumiayu, Kec. Kedungkandang, Kota Malang
+      <div class="col-lg-6" style="padding: 20px; margin: 20px 0;">
+        <p class="mb-0">
+          Dengan desain yang dipikirkan secara matang, setiap sudut di Emerald
+          Garden menciptakan suasana yang mengundang, mencerminkan perpaduan
+          antara fungsionalitas dan estetika. Keberadaan fasilitas terbaik tidak
+          hanya menjadi pelengkap, tetapi juga menjadi bagian tak terpisahkan
+          dari pengalaman hidup di sini. Dari kolam renang yang menyegarkan
+          hingga taman bermain anak-anak yang riang, setiap elemen dirancang
+          untuk meningkatkan kualitas hidup Anda. Kami mengundang Anda untuk
+          merasakan kebahagiaan di sini, di tengah-tengah lingkungan yang ramah
+          dan aman. Komitmen kami terhadap keamanan melibatkan penggunaan
+          teknologi keamanan terkini dan tim keamanan yang ahli. Sehingga, di
+          sini, Anda tidak hanya mendapatkan rumah yang indah, tetapi juga
+          tempat yang menyediakan ketenangan pikiran. Dalam setiap langkah yang
+          Anda ambil di dalam Emerald Garden, Anda akan merasakan nuansa
+          kebersamaan dan kenyamanan yang membentuk fondasi dari rumah yang
+          sempurna.
         </p>
-        <img src="/static/img/kantorpemasaran.jpg" alt="Kantor Pemasaran" />
       </div>
-      <div class="col-lg-6">
-        <div class="map" id="contact">
-          <div class="mapouter">
-            <div class="gmap_canvas">
-              <iframe
-                src="https://maps.google.com/maps?q=perumahan%20emerald%20garden%20bumiayu&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-                frameborder="0"
-                scrolling="no"
-                style="width: 100%; height: 100%"
-              ></iframe>
-              <style>
-                .mapouter {
-                  position: relative;
-                  height: 400px; /* Adjust this height as needed */
-                  width: 100%;
-                }
-                .gmap_canvas {
-                  overflow: hidden;
-                  height: 100%;
-                  width: 100%;
-                }
-                .gmap_canvas iframe {
-                  position: relative;
-                  z-index: 2;
-                  width: 100%;
-                  height: 100%;
-                }
-              </style>
+    </div>
+  </div>
+
+  <!-- End Detail About Us -->
+
+  <!-- Start Siteplan -->
+  <div class="d-flex flex-column align-items-center">
+    <img
+      class="img-fluid mx-auto"
+      src="/static/img/siteplan.jpg"
+      alt="Siteplan"
+      style="width: 3000px; height: 990px"
+    />
+  </div>
+
+  <!-- End Siteplan -->
+
+  <!-- Start Kantor -->
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h2>Kunjungi Kantor Pemasaran Kami</h2>
+          <p>
+            Jl. Kyai Parseh Jaya No.01, Bumiayu, Kec. Kedungkandang, Kota Malang
+          </p>
+          <br />
+          <img src="/static/img/kantorpemasaran.jpg" alt="Kantor Pemasaran" style="height: 58%; width: 100%;"/>
+        </div>
+        <div class="col-lg-6">
+          <div class="map" id="contact">
+            <div class="mapouter">
+              <div class="gmap_canvas">
+                <iframe
+                  src="https://maps.google.com/maps?q=perumahan%20emerald%20garden%20bumiayu&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                  frameborder="0"
+                  scrolling="no"
+                  style="width: 100%; height: 100%"
+                ></iframe>
+                <style>
+                  .mapouter {
+                    position: relative;
+                    height: 400px; 
+                    width: 100%;
+                  }
+                  .gmap_canvas {
+                    overflow: hidden;
+                    height: 100%;
+                    width: 100%;
+                  }
+                  .gmap_canvas iframe {
+                    position: relative;
+                    z-index: 2;
+                    width: 100%;
+                    height: 100%;
+                  }
+                </style>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- End Kantor -->
-{% endblock %}
-
-{% block scriptjs %}
-<script src="../static/assets/js/fasilitas.js"></script>
-<script>
-  $(document).ready(function () {
-    // Ganti id_produk dengan nilai yang sesuai atau ambil dari suatu sumber
-    tampilkanFasilitas();
-  });
-</script>
-{% endblock %}
+  <!-- End Kantor -->
+  {% endblock %} {% block scriptjs %} {% endblock %}
+</div>

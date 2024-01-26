@@ -1,0 +1,147 @@
+{% extends 'base.html' %} {% block body %}
+
+<style>
+  .container-pict {
+    margin-top: 8%;
+  }
+</style>
+
+  <!-- Start Preview Fasilitas -->
+  <div class="fasilitasjudul">
+    <h1>Fasilitas yang Ideal di Lingkungan Anda</h1>
+    <br/>
+    <p> Emerald Garden menyajikan berbagai fasilitas yang telah dirancang untuk memenuhi segala kebutuhan dan kenyamanan penghuninya. Dengan kombinasi kualitas tinggi dan keelokan lingkungan, Emerald Garden menghadirkan suasana yang hangat dan pelayanan yang istimewa.</p>
+  </div>
+  <div class="album py-5 bg-body-tertiary">
+    <br />
+    <div class="container">
+      <div class="row" id="daftar-fasilitas">
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg
+              class="bd-placeholder-img card-img-top"
+              width="100%"
+              height="225"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Placeholder: Thumbnail"
+              preserveAspectRatio="xMidYMid slice"
+              focusable="false"
+            >
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+            <div class="col">
+              <div class="card-body">
+                <b>Jenis Fasilitas</b><br />
+                <p class="card-text">
+                  This is a wider card with supporting text below as a natural
+                  lead-in to additional content. This content is a little bit
+                  longer.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg
+              class="bd-placeholder-img card-img-top"
+              width="100%"
+              height="225"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Placeholder: Thumbnail"
+              preserveAspectRatio="xMidYMid slice"
+              focusable="false"
+            >
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+            <div class="col">
+              <div class="card-body">
+                <b>Jenis Fasilitas</b><br />
+                <p class="card-text">
+                  This is a wider card with supporting text below as a natural
+                  lead-in to additional content. This content is a little bit
+                  longer.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg
+              class="bd-placeholder-img card-img-top"
+              width="100%"
+              height="225"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Placeholder: Thumbnail"
+              preserveAspectRatio="xMidYMid slice"
+              focusable="false"
+            >
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+            <div class="col">
+              <div class="card-body">
+                <b>Jenis Fasilitas</b><br />
+                <p class="card-text">
+                  This is a wider card with supporting text below as a natural
+                  lead-in to additional content. This content is a little bit
+                  longer.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg
+              class="bd-placeholder-img card-img-top"
+              width="100%"
+              height="225"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Placeholder: Thumbnail"
+              preserveAspectRatio="xMidYMid slice"
+              focusable="false"
+            >
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+            <div class="col">
+              <div class="card-body">
+                <b>Jenis Fasilitas</b><br />
+                <p class="card-text">
+                  This is a wider card with supporting text below as a natural
+                  lead-in to additional content. This content is a little bit
+                  longer.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  End Preview Fasilitas -->
+
+</section>
+{% endblock %}
+
+{% block scriptjs %}
+<script src="../static/assets/js/fasilitas.js"></script>
+<script>
+  $(document).ready(function () {
+    // Ganti id_produk dengan nilai yang sesuai atau ambil dari suatu sumber
+    tampilkanFasilitas();
+  });
+</script>
+{% endblock %}

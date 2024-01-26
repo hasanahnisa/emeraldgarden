@@ -570,6 +570,9 @@ def produk60():
 def produkkavling():
    return render_template('produkkavling.html')
 
+@app.route('/fasilitas')
+def fasilitas():
+   return render_template('fasilitas.html')
 
 if __name__ == '__main__':
    app.run('0.0.0.0', port=5000, debug=True)

@@ -25,6 +25,10 @@
       integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofpX6jS+5uL5Sv5t+8R6wL5u5U02++iz"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    />
 
     <link
       href="{{ url_for('static', filename='assets/colors/colors.css') }}"
@@ -44,18 +48,25 @@
       class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
       style="width: 100%; padding: 0 15px; margin-bottom: 0"
     >
-      <div class="col-md-3 mb-md-0">
+      <div class="col-md-3 mb-md-0 d-flex align-items-center">
         <a
           href="/"
           class="d-inline-flex link-body-emphasis text-decoration-none"
         >
+          <img
+            src="/static/img/logo.png"
+            alt="Logo"
+            style="max-width: 70%; height: auto; margin-left: 7%"
+          />
         </a>
       </div>
 
       <ul
         class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ms-auto pe-md-4"
       >
-        <li><a href="/" class="nav-link px-2 text-white">Beranda</a></li>
+        <li>
+          <a href="/" class="nav-link px-2 text-white active">Beranda</a>
+        </li>
 
         <!-- Dropdown Produk -->
         <li class="nav-item dropdown">
@@ -79,7 +90,15 @@
         <!-- End Dropdown Produk -->
 
         <li>
-          <a href="/about" class="nav-link px-2 text-white">Tentang Kami</a>
+          <a href="/fasilitas" class="nav-link px-2 text-white active"
+            >Fasilitas</a
+          >
+        </li>
+
+        <li>
+          <a href="/about" class="nav-link px-2 text-white active"
+            >Tentang Kami</a
+          >
         </li>
       </ul>
 
@@ -107,9 +126,7 @@
     ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    {% block scriptjs %}
-      
-    {% endblock %}
+    {% block scriptjs %} {% endblock %}
 
     <script>
       $(function () {
@@ -131,6 +148,18 @@
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
             }
           });
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $(".nav-link").on("click", function () {
+          // Menghapus kelas active dari semua elemen
+          $(".nav-link").removeClass("active");
+
+          // Menambahkan kelas active pada elemen yang ditekan
+          $(this).addClass("active");
         });
       });
     </script>
