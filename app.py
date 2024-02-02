@@ -203,7 +203,8 @@ def tambahFasilitas():
                      doc["gambar"] = ''
 
                   # Tambahkan data baru ke MongoDB
-                  db.fasilitas.insert_one(doc)
+                  if doc:
+                     db.fasilitas.insert_one(doc)
 
                   return redirect(url_for('adminFasilitas'))
                
@@ -237,7 +238,7 @@ def perbaruiFasilitas():
             if user_info:
                if request.method == 'POST':
                   id = request.form['id']
-                  nama = request.form['nama_fasilitas']
+                  nama = request.form['namafasilitas']
                   jenis = request.form['jenis_fasilitas']
                   deskripsi = request.form['deskripsi_fasilitas']
 
@@ -302,10 +303,13 @@ def hapusFasilitas(id_fasilitas):
             
             if fasilitas:
                if user_info:
-                  if 'gambar' in fasilitas:
+                  if fasilitas['gambar'] in fasilitas or fasilitas['gambar'] != "":
                      gambar_path = os.path.join(os.getcwd(), 'static', fasilitas['gambar'])
                      if os.path.exists(gambar_path):
                         os.remove(gambar_path)
+                     db.fasilitas.delete_one({'_id':ObjectId(id_fasilitas)})
+                     return redirect(url_for('adminFasilitas'))
+                  else:
                      db.fasilitas.delete_one({'_id':ObjectId(id_fasilitas)})
                      return redirect(url_for('adminFasilitas'))
                else:
@@ -320,26 +324,26 @@ def hapusFasilitas(id_fasilitas):
    else:
       return render_template('login.html',msg="token tidak ada")   
 
-@app.route('/get_fasilitas', methods=['GET'])
-def get_fasilitas():
-   fasilitas = list(db.fasilitas.find({}))
-   print(fasilitas)
+@app.route('/get_fasilitas/<id>', methods=['GET'])
+def get_fasilitas(id):
+   print('ini adalah ID : '+id)
+   data = db.fasilitas.find_one({'_id':ObjectId(id)})
+   print(data)
    
-   list_fasilitas = []
-   for data in fasilitas :
-      doc = {
-         '_id': str(data['_id']),
-         'nama': data['nama'],
-         'jenis': data['jenis'],
-         'deskripsi': data['deskripsi'],
-         'gambar': data['gambar'] if 'gambar' in data else None
-      }
+
+   doc = {
+      '_id': id,
+      'nama': data['nama'],
+      'jenis': data['jenis'],
+      'deskripsi': data['deskripsi'],
+      'gambar': data['gambar'] if 'gambar' in data else None
+   }
       
-      list_fasilitas.append(doc)
+
    
-   if fasilitas:
+   if data:
       return jsonify({
-         'fasilitas': list_fasilitas
+         'fasilitas': doc
       })
    else:
       return jsonify({'error': 'Produk not found'}), 404

@@ -18,6 +18,8 @@
       width: 100%;
       height: auto;
   }
+
+  
 </style>
 {% endblock %}
 
@@ -103,7 +105,6 @@
               >Jenis Fasilitas</label
             >
             <select class="form-select" id="tipeSelect_edit" name="jenis_fasilitas">
-              <option selected disabled>Jenis Fasilitas</option>
               <option value="playground">Playground</option>
               <option value="lapangan">Lapangan Olahraga</option>
               <option value="tempatibadah">Tempat Ibadah</option>
@@ -191,7 +192,7 @@
           <div class="media-content modal-card bg-white p-5 rounded overflow-scroll">
             <div class="form-group mb-4 is-align-items-center">
               <strong class="mr-2 is-blue">Nama Fasilitas</strong>
-              <p id="help_namaFasilitas" class="help mb-2 is-hidden"></p>
+              <p id="help_namaFasilitas" class="help mb-2 is-hidden is-danger"></p>
               <input
                 type="text"
                 class="form-control"
@@ -207,9 +208,8 @@
                 <label for="tipeSelect" class="visually-hidden"
                   >Jenis Fasilitas</label
                 >
-                <p id="help_jenisFasilitas" class="help mb-2 is-hidden"></p>
+                <p id="help_jenisFasilitas" class="help mb-2 is-hidden is-danger"></p>
                 <select class="form-select" id="tipeSelect" name="jenis_fasilitas">
-                  <option selected disabled>Jenis Fasilitas</option>
                   <option value="playground">Playground</option>
                   <option value="lapangan">Lapangan Olahraga</option>
                   <option value="tempatibadah">Tempat Ibadah</option>
@@ -221,7 +221,7 @@
 
             <div class="field">
               <label class="label" for="textarea-about">Deskripsi Fasilitas</label>
-              <p class="control">
+              <p id="help_deskripsi" class="help mb-2 is-hidden is-danger"></p>
                 <textarea
                   id="textarea-deskripsi"
                   class="textarea"
@@ -237,6 +237,7 @@
                   
                   <div class="mb-3">
                     <label for="gambarFasilitas" class="label">Gambar Fasilitas</label>
+                    <p id="help_imageFasilitas" class="help mb-2 is-hidden is-danger"></p>
                     <input type="file" class="form-control" id="image" autocomplete="off" name="gambar_fasilitas" />
                   </div>
       
@@ -318,36 +319,88 @@
     
     <script>
       $( document ).ready(function() {
-        $('#menu_fasilitas').addClass('active')
-        $('#menu_produk').removeClass('active')
-        $('#menu_produk').addClass('link-dark')
-        $('#menu_fasilitas').removeClass('link-dark')
-        $('.post-image').on('click', function() {
-          $(this).toggleClass('full-size-image');
+        
+        $('#menu_fasilitas').addClass('active');
+        $('#menu_produk').removeClass('active');
+        $('#menu_produk').addClass('link-dark');
+        $('#menu_fasilitas').removeClass('link-dark');
+        $('.post-image').on('click', function () {
+            $(this).toggleClass('full-size-image');
         });
 
-        $('#image').change(function(e) {
+        $('#image').change(function (e) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files['0']);
+        });
+
+        $('#image_edit').change(function (e) {
           var reader = new FileReader();
-          reader.onload = function(e) {
-              $('#showImage').attr('src', e.target.result);
+          reader.onload = function (e) {
+              $('#showImage_edit').attr('src', e.target.result);
           }
           reader.readAsDataURL(e.target.files['0']);
       });
 
+        // Validation for modal-add form
+        $('#modal-add form').submit(function (e) {
+            e.preventDefault(); // Prevent the form from submitting
+
+            let namaFasilitas = $('#modal-add input[name="nama_fasilitas"]').val();
+            let jenisFasilitas = $("#tipeSelect").val();
+            let deskripsi = $("#textarea-deskripsi").val();
+            let imageInput = $("#image")[0];
+
+
+            let helpImageFasilitas = $("#help_imageFasilitas");
+            let helpNamaFasilitas = $("#help_namaFasilitas");
+            let helpJenisFasilitas = $("#help_jenisFasilitas");
+            let helpDeskripsi = $("#help_deskripsi");
+            helpImageFasilitas.text("").addClass("is-hidden");
+
+
+            // Perform validation
+            if (namaFasilitas.trim() === "") {
+                helpNamaFasilitas.text("Masukkan Nama Fasilitas").removeClass("is-hidden").addClass("is-danger");
+                return;
+            }
+            if (deskripsi.trim() === "") {
+                helpDeskripsi.text("Masukkan Deskripsi").removeClass("is-hidden").addClass("is-danger");
+                return;
+            }
+
+            if (jenisFasilitas === null) {
+                helpJenisFasilitas.text("Pilih Jenis Fasilitas").removeClass("is-hidden").addClass("is-danger");
+                return;
+            }
+
+            if (imageInput.files.length === 0) {
+              helpImageFasilitas.text("Pilih Gambar Fasilitas").removeClass("is-hidden").addClass("is-red");
+              return;
+          }
+
+            // If validation passes, submit the form
+            this.submit();
+        });
       
     });
 
     function editFasilitas(button) {
+      $('#modal-edit').addClass('is-active')
       var id = $(button).data('id');
     
       // Panggil rute pada server untuk mendapatkan data fasilitas berdasarkan ID
       $.ajax({
         url: '/get_fasilitas/' + id,
         type: 'GET',
-        success: function(data) {
+        success: function(datas) {
+          let data = datas.fasilitas
+          console.log(data.nama)
           // Isi nilai-nilai formulir dengan data fasilitas yang diperoleh
           $('#modal-edit input[name="id"]').val(data._id);
-          $('#modal-edit input[name="nama_fasilitas"]').val(data.nama);
+          $('#modal-edit input[name="namafasilitas"]').val(data.nama);
           $('#tipeSelect_edit').val(data.jenis);
           $('#textarea-deskripsi_edit').val(data.deskripsi);
     
