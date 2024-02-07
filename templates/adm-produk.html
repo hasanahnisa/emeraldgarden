@@ -1,35 +1,31 @@
-{% extends 'base_admin.html' %} 
-
-{% block admin_head %}
+{% extends 'base_admin.html' %} {% block admin_head %}
 <style>
   .post-image {
-      max-width: 100px;
-      max-height: 100px;
-      width: 100px;
-      object-fit: cover;
-      cursor: pointer;
-      /* Add pointer cursor to indicate clickability */
+    max-width: 100px;
+    max-height: 100px;
+    width: 100px;
+    object-fit: cover;
+    cursor: pointer;
+    /* Add pointer cursor to indicate clickability */
   }
 
   /* Add a class for the full-size view */
   .full-size-image {
-      max-width: 100%;
-      max-height: none;
-      width: 100%;
-      height: auto;
+    max-width: 100%;
+    max-height: none;
+    width: 100%;
+    height: auto;
   }
 </style>
-{% endblock %}
-
-{% block admin_body %}
+{% endblock %} {% block admin_body %}
 
 <div class="flex-grow-1 p-3">
   <button
-class="btn btn-primary"
-onclick="$('#modal-add').addClass('is-active')"
->
-Tambah Data
-</button>
+    class="btn btn-primary"
+    onclick="$('#modal-add').addClass('is-active')"
+  >
+    Tambah Data
+  </button>
   <table class="table">
     <thead>
       <tr>
@@ -48,24 +44,33 @@ Tambah Data
         <td>{{ produk.deskripsi }}</td>
         <td>
           {% if produk.gambar is defined and produk.gambar != '' %}
-          <img class="post-image"
-          src="../static/{{ produk.gambar }}"
-          alt="gambar produk">
+          <img
+            class="post-image"
+            src="../static/{{ produk.gambar }}"
+            alt="gambar produk"
+          />
           {% else %}
-          <img class="post-image"
-          src="../static/no_image.jpg"
-          alt="gambar produk">
-          {% endif %}  
+          <img
+            class="post-image"
+            src="../static/no_image.jpg"
+            alt="gambar produk"
+          />
+          {% endif %}
         </td>
         <td>
           <button
-          class="btn btn-primary"
-          data-id="{{ produk._id }}" 
-          onclick="editProduk(this)"
+            class="btn btn-primary"
+            data-id="{{ produk._id }}"
+            onclick="editProduk(this)"
           >
             Edit
           </button>
-          <a href="/hapus/produk/{{ produk._id }}" id="delete" class="btn btn-danger">Hapus</a>
+          <a
+            href="/hapus/produk/{{ produk._id }}"
+            id="delete"
+            class="btn btn-danger"
+            >Hapus</a
+          >
         </td>
       </tr>
       {% endfor %}
@@ -81,11 +86,15 @@ Tambah Data
   ></div>
   <article>
     <form action="/perbarui/produk" method="post" enctype="multipart/form-data">
-      <div class="media-content modal-card bg-white p-5 rounded overflow-scroll">
-        <input type="hidden" name="id" value="">
+      <div
+        class="media-content modal-card bg-white p-5 rounded overflow-scroll"
+      >
+        <input type="hidden" name="id" value="" />
         <div class="field">
           <th>
-            <label for="tipeSelect_edit" class="visually-hidden">Pilih Tipe</label>
+            <label for="tipeSelect_edit" class="visually-hidden"
+              >Pilih Tipe</label
+            >
             <select class="form-select" id="tipeSelect_edit" name="tipe">
               <option selected disabled>Pilih Tipe</option>
               <option value="30">Tipe 30</option>
@@ -95,7 +104,7 @@ Tambah Data
             </select>
           </th>
         </div>
-  
+
         <div class="field">
           <label class="label" for="textarea-about">Deskripsi Produk</label>
           <p class="control">
@@ -108,16 +117,20 @@ Tambah Data
             </textarea>
           </p>
         </div>
-  
+
         <div class="field">
           <div class="control is-expanded">
             <div class="file has-name">
-              
               <div class="mb-3">
                 <label for="gambarProduk" class="label">Gambar Produk</label>
-                <input type="file" class="form-control" id="image_edit" autocomplete="off" name="gambar_produk" />
+                <input
+                  type="file"
+                  class="form-control"
+                  id="image_edit"
+                  autocomplete="off"
+                  name="gambar_produk"
+                />
               </div>
-  
             </div>
           </div>
         </div>
@@ -125,30 +138,28 @@ Tambah Data
         <div class="field">
           <div class="control is-expanded">
             <div class="file has-name">
-              
-            <div class="row mb-3">
+              <div class="row mb-3">
                 <label for="gambarProduk" class="form-label"></label>
-                <img id="showImage_edit" class="wd-200 rounded mb-4"
-                    src="../static/no_image.jpg"
-                    alt="gambar produk">
-            </div>
-  
+                <img
+                  id="showImage_edit"
+                  class="wd-200 rounded mb-4"
+                  src="../static/no_image.jpg"
+                  alt="gambar produk"
+                />
+              </div>
             </div>
           </div>
         </div>
-  
+
         <nav class="level is-mobile">
           <div class="level-left"></div>
           <div class="level-right">
             <div class="level-item">
-              <button
-              type="submit"
-                class="button is-button-blue is-bold"
-              >
-                Perbarui</button
-              >
+              <button type="submit" class="button is-button-blue is-bold">
+                Perbarui
+              </button>
             </div>
-  
+
             <div class="level-item">
               <a
                 class="button is-button-red"
@@ -165,159 +176,210 @@ Tambah Data
 </div>
 <!-- End Edit Data -->
 
-  <!-- Start Add Data -->
-  <div class="modal" id="modal-add">
-    <div
-      class="modal-background"
-      onclick="$('#modal-add').removeClass('is-active')"
-    ></div>
-    <article>
-      <form action="/tambah/produk" method="post" enctype="multipart/form-data">
-        <div class="media-content modal-card bg-white p-5 rounded overflow-scroll">
-          <div class="field">
-            <th>
-              <label for="tipeSelect_edit" class="visually-hidden">Pilih Tipe</label>
-              <select class="form-select" id="tipeSelect_edit" name="tipe">
-                <option selected disabled>Pilih Tipe</option>
-                <option value="30">Tipe 30</option>
-                <option value="36">Tipe 36</option>
-                <option value="60">Tipe 60</option>
-                <option value="kavling">Kavling</option>
-              </select>
-            </th>
-          </div>
-    
-          <div class="field">
-            <label class="label" for="textarea-about">Deskripsi Produk</label>
-            <p class="control">
-              <textarea
-                id="textarea-deskripsi_edit"
-                class="textarea"
-                placeholder="Deskripsi usaha"
-                name="deskripsi"
-              >
-              </textarea>
-            </p>
-          </div>
-    
-          <div class="field">
-            <div class="control is-expanded">
-              <div class="file has-name">
-                
-                <div class="mb-3">
-                  <label for="gambarProduk" class="label">Gambar Produk</label>
-                  <input type="file" class="form-control" id="image" autocomplete="off" name="gambar_produk" />
-                </div>
-    
-              </div>
-            </div>
-          </div>
-  
-          <div class="field">
-            <div class="control is-expanded">
-              <div class="file has-name">
-                
-              <div class="row mb-3">
-                  <label for="gambarProduk" class="form-label"></label>
-                  <img id="showImage" class="wd-200 rounded mb-4"
-                      src="../static/no_image.jpg"
-                      alt="gambar produk">
-              </div>
-    
-              </div>
-            </div>
-          </div>
-    
-          <nav class="level is-mobile">
-            <div class="level-left"></div>
-            <div class="level-right">
-              <div class="level-item">
-                <button
-                  type="submit"
-                  class="button is-button-blue is-bold"
-                >
-                  Tambah</button>
-              </div>
-    
-              <div class="level-item">
-                <a
-                  class="button is-button-red"
-                  onclick="$('#modal-add').removeClass('is-active')"
-                >
-                  Batal</a
-                >
-              </div>
-            </div>
-          </nav>
+<!-- Start Add Data -->
+<div class="modal" id="modal-add">
+  <div
+    class="modal-background"
+    onclick="$('#modal-add').removeClass('is-active')"
+  ></div>
+  <article>
+    <form action="/tambah/produk" method="post" enctype="multipart/form-data">
+      <div
+        class="media-content modal-card bg-white p-5 rounded overflow-scroll"
+      >
+        <div class="field">
+          <th>
+            <label for="tipeSelect_edit" class="visually-hidden"
+              >Pilih Tipe</label
+            >
+            <p id="help_tipeProduk" class="help mb-2 is-hidden is-danger"></p>
+            <select class="form-select" id="tipeSelect_edit" name="tipe">
+              <option selected disabled>Pilih Tipe</option>
+              <option value="30">Tipe 30</option>
+              <option value="36">Tipe 36</option>
+              <option value="60">Tipe 60</option>
+              <option value="kavling">Kavling</option>
+            </select>
+          </th>
         </div>
-      </form>
-    </article>
-  </div>
-  <!-- End Add Data -->
-{% endblock %}
 
-{% block admin_script %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-      $( document ).ready(function() {
-        $('#menu_fasilitas').removeClass('active')
-        $('#menu_produk').addClass('active')
-        $('#menu_produk').removeClass('link-dark')
-        $('#menu_fasilitas').addClass('link-dark')
-        $('.post-image').on('click', function() {
-          $(this).toggleClass('full-size-image');
-        });
+        <div class="field">
+          <label class="label" for="textarea-about">Deskripsi Produk</label>
+          <p class="control">
+            <textarea
+              id="textarea-deskripsi_edit"
+              class="textarea"
+              placeholder="Deskripsi Produk"
+              name="deskripsi"
+            >
+            </textarea>
+          </p>
+        </div>
 
-        $('#image').change(function(e) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-              $('#showImage').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(e.target.files['0']);
-      });
-        $('#image_edit').change(function(e) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-              $('#showImage_edit').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(e.target.files['0']);
-      });
+        <div class="field">
+          <div class="control is-expanded">
+            <div class="file has-name">
+              <div class="mb-3">
+                <label for="gambarProduk" class="label">Gambar Produk</label>
+                <p
+                  id="help_imageProduk"
+                  class="help mb-2 is-hidden is-danger"
+                ></p>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="image"
+                  autocomplete="off"
+                  name="gambar_produk"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-      
+        <div class="field">
+          <div class="control is-expanded">
+            <div class="file has-name">
+              <div class="row mb-3">
+                <label for="gambarProduk" class="form-label"></label>
+                <img
+                  id="showImage"
+                  class="wd-200 rounded mb-4"
+                  src="../static/no_image.jpg"
+                  alt="gambar produk"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="level is-mobile">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <button type="submit" class="button is-button-blue is-bold">
+                Tambah
+              </button>
+            </div>
+
+            <div class="level-item">
+              <a
+                class="button is-button-red"
+                onclick="$('#modal-add').removeClass('is-active')"
+              >
+                Batal</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+    </form>
+  </article>
+</div>
+<!-- End Add Data -->
+{% endblock %} {% block admin_script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#menu_fasilitas").removeClass("active");
+    $("#menu_produk").addClass("active");
+    $("#menu_produk").removeClass("link-dark");
+    $("#menu_fasilitas").addClass("link-dark");
+    $(".post-image").on("click", function () {
+      $(this).toggleClass("full-size-image");
     });
 
-    function editProduk(button) {
-      var id = $(button).data('id');
-    
-      // Panggil rute pada server untuk mendapatkan data produk berdasarkan ID
-      $.ajax({
-        url: '/get_produk/' + id,
-        type: 'GET',
-        success: function(data) {
-          // Isi nilai-nilai formulir dengan data produk yang diperoleh
-          $('#modal-edit input[name="id"]').val(data._id);
-          $('#tipeSelect_edit').val(data.tipe);
-          $('#textarea-deskripsi_edit').val(data.deskripsi);
-    
-          // Hapus atribut 'src' agar gambar tetap ditampilkan bahkan jika gambar tidak ada
-          $('#showImage_edit').removeAttr('src');
-          
-          // Tampilkan gambar jika ada
-          if (data.gambar) {
-            var gambarPath = '../static/' + data.gambar;
-            $('#showImage_edit').attr('src', gambarPath);
-          }else{
-            $('#showImage_edit').attr('src', '../static/no_image.jpg');
-          }
-    
-          // Tampilkan modal edit
-          $('#modal-edit').addClass('is-active');
-        },
-        error: function(error) {
-          console.error('Error:', error);
-        }
-      });
-    }
-    </script>
-{% endblock %}
+    $("#image").change(function (e) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $("#showImage").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(e.target.files["0"]);
+    });
+    $("#image_edit").change(function (e) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $("#showImage_edit").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(e.target.files["0"]);
+    });
 
+    // Validation for modal-add form
+    $("#modal-add form").submit(function (e) {
+      e.preventDefault(); // Prevent the form from submitting
+
+      let tipeProduk = $("#tipeProduk").val();
+      let deskripsi = $("#textarea-deskripsi").val();
+
+      let helpImageProduk = $("#help_imageProduk");
+      let helptipeProduk = $("#help_tipeProduk");
+      let helpDeskripsi = $("#help_deskripsi");
+      helpImageProduk.text("").addClass("is-hidden");
+
+      // Perform validation
+      if (deskripsi.trim() === "") {
+        helpDeskripsi
+          .text("Masukkan Deskripsi")
+          .removeClass("is-hidden")
+          .addClass("is-danger");
+        return;
+      }
+
+      if (tipeProduk === null) {
+        helptipeProduk
+          .text("Pilih Tipe Produk")
+          .removeClass("is-hidden")
+          .addClass("is-danger");
+        return;
+      }
+
+      if (imageInput.files.length === 0) {
+        helpImageProduk
+          .text("Pilih Gambar Produk")
+          .removeClass("is-hidden")
+          .addClass("is-red");
+        return;
+      }
+
+      // If validation passes, submit the form
+      this.submit();
+    });
+  });
+
+  function editProduk(button) {
+    $("#modal-edit").addClass("is-active");
+    var id = $(button).data("id");
+
+    // Panggil rute pada server untuk mendapatkan data produk berdasarkan ID
+    $.ajax({
+      url: "/get_produk/" + id,
+      type: "GET",
+      success: function (datas) {
+        let data = datas.produks;
+        console.log(data.tipe);
+        // Isi nilai-nilai formulir dengan data produk yang diperoleh
+        $('#modal-edit input[name="id"]').val(data._id);
+        $("#tipeSelect_edit").val(data.tipe);
+        $("#textarea-deskripsi_edit").val(data.deskripsi);
+
+        // Hapus atribut 'src' agar gambar tetap ditampilkan bahkan jika gambar tidak ada
+        $("#showImage_edit").removeAttr("src");
+
+        // Tampilkan gambar jika ada
+        if (data.gambar) {
+          var gambarPath = "../static/" + data.gambar;
+          $("#showImage_edit").attr("src", gambarPath);
+        } else {
+          $("#showImage_edit").attr("src", "../static/no_image.jpg");
+        }
+
+        // Tampilkan modal edit
+        $("#modal-edit").addClass("is-active");
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
+  }
+</script>
+{% endblock %}

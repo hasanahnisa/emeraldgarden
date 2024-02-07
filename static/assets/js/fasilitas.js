@@ -3,7 +3,7 @@ function tampilkanFasilitas() {
 
     $.ajax({
       type: "GET",
-      url: `/get_fasilitas`, // Gunakan backtick (`) untuk template literals
+      url: `/get_fasilitas`, 
       success: function (response) {
         if (response && response.fasilitas) {
           let fasilitas = response.fasilitas;

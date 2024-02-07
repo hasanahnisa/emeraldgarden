@@ -44,116 +44,77 @@
 
   <body>
     <!-- Start Header -->
-    <header>  
-      <nav class="navbar navbar-expand-lg" style="background-color: #1a5d1a;">
+    <header>
+      <nav class="navbar navbar-expand-lg" style="background-color: #1a5d1a">
         <div class="container-fluid">
           <a
-          href="/"
-          class="d-inline-flex link-body-emphasis text-decoration-none"
-        >
-          <img
-            src="/static/img/logo.png"
-            alt="Logo"
-            style="width: auto; height: 60px;"
-          />
-        </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            href="/"
+            class="d-inline-flex link-body-emphasis text-decoration-none"
+          >
+            <img
+              src="/static/img/logo.png"
+              alt="Logo"
+              style="width: auto; height: 60px"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a href="/" class="nav-link px-2 text-white active">Beranda</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
+                <a
+                  class="nav-link dropdown-toggle text-white"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Produk
                 </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <ul class="dropdown-menu" aria-labelledby="produkDropdown">
+                  <li><a class="dropdown-item" href="/produk30">Tipe 30</a></li>
+                  <li><a class="dropdown-item" href="/produk36">Tipe 36</a></li>
+                  <li><a class="dropdown-item" href="/produk60">Tipe 60</a></li>
+                  <li>
+                    <a class="dropdown-item" href="/produkkavling">Kavling</a>
+                  </li>
                 </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              <li>
+                <a href="/fasilitas" class="nav-link px-2 text-white active"
+                  >Fasilitas</a
+                >
+              </li>
+
+              <li>
+                <a href="/about" class="nav-link px-2 text-white active"
+                  >Tentang Kami</a
+                >
+              </li>
+              &nbsp;
+
+              <li>
+                <button type="button" class="btn btn-success">
+                  Hubungi Kami
+                </button>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
           </div>
         </div>
       </nav>
     </header>
- 
-     
-    <header
-      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
-      style="width: 100%; padding: 0 15px; margin-bottom: 0"
-    >
-      <div class="col-md-3 mb-md-0 d-flex align-items-center">
-        <a
-          href="/"
-          class="d-inline-flex link-body-emphasis text-decoration-none"
-        >
-          <img
-            src="/static/img/logo.png"
-            alt="Logo"
-            style="max-width: 70%; height: auto; margin-left: 7%"
-          />
-        </a>
-      </div>
-
-      <ul
-        class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ms-auto pe-md-4"
-      >
-        <li>
-          <a href="/" class="nav-link px-2 text-white active">Beranda</a>
-        </li>
-
-        <!-- Dropdown Produk -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle text-white"
-            href="#"
-            id="produkDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Produk
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="produkDropdown">
-            <li><a class="dropdown-item" href="/produk30">Tipe 30</a></li>
-            <li><a class="dropdown-item" href="/produk36">Tipe 36</a></li>
-            <li><a class="dropdown-item" href="/produk60">Tipe 60</a></li>
-            <li><a class="dropdown-item" href="/produkkavling">Kavling</a></li>
-          </ul>
-        </li>
-        <!-- End Dropdown Produk -->
-
-        <li>
-          <a href="/fasilitas" class="nav-link px-2 text-white active"
-            >Fasilitas</a
-          >
-        </li>
-
-        <li>
-          <a href="/about" class="nav-link px-2 text-white active"
-            >Tentang Kami</a
-          >
-        </li>
-      </ul>
-
-      <button type="button" class="btn btn-success">Hubungi Kami</button>
-    </header>
-
     <!-- End Header -->
 
     {% block body %} {% endblock %}
