@@ -193,7 +193,7 @@
               >Pilih Tipe</label
             >
             <p id="help_tipeProduk" class="help mb-2 is-hidden is-danger"></p>
-            <select class="form-select" id="tipeSelect_edit" name="tipe">
+            <select class="form-select" id="tipeSelect_add" name="tipe">
               <option selected disabled>Pilih Tipe</option>
               <option value="30">Tipe 30</option>
               <option value="36">Tipe 36</option>
@@ -205,9 +205,9 @@
 
         <div class="field">
           <label class="label" for="textarea-about">Deskripsi Produk</label>
-          <p class="control">
+          <p id="help_deskripsi" class="help mb-2 is-hidden is-danger"></p>
             <textarea
-              id="textarea-deskripsi_edit"
+              id="textarea-deskripsi"
               class="textarea"
               placeholder="Deskripsi Produk"
               name="deskripsi"
@@ -228,7 +228,7 @@
                 <input
                   type="file"
                   class="form-control"
-                  id="image"
+                  id="image_add"
                   autocomplete="off"
                   name="gambar_produk"
                 />
@@ -289,7 +289,7 @@
       $(this).toggleClass("full-size-image");
     });
 
-    $("#image").change(function (e) {
+    $("#image_add").change(function (e) {
       var reader = new FileReader();
       reader.onload = function (e) {
         $("#showImage").attr("src", e.target.result);
@@ -308,8 +308,10 @@
     $("#modal-add form").submit(function (e) {
       e.preventDefault(); // Prevent the form from submitting
 
-      let tipeProduk = $("#tipeProduk").val();
+      let tipeProduk = $("#tipeSelect_add").val();
       let deskripsi = $("#textarea-deskripsi").val();
+      let imageInput = $("#image_add")[0];
+
 
       let helpImageProduk = $("#help_imageProduk");
       let helptipeProduk = $("#help_tipeProduk");
@@ -354,20 +356,20 @@
     $.ajax({
       url: "/get_produk/" + id,
       type: "GET",
-      success: function (datas) {
-        let data = datas.produks;
-        console.log(data.tipe);
+      success: function (data) {
+        let produk = data.produk;
+        console.log(produk.tipe);
         // Isi nilai-nilai formulir dengan data produk yang diperoleh
-        $('#modal-edit input[name="id"]').val(data._id);
-        $("#tipeSelect_edit").val(data.tipe);
-        $("#textarea-deskripsi_edit").val(data.deskripsi);
+        $('#modal-edit input[name="id"]').val(produk._id);
+        $("#tipeSelect_edit").val(produk.tipe);
+        $("#textarea-deskripsi_edit").val(produk.deskripsi);
 
         // Hapus atribut 'src' agar gambar tetap ditampilkan bahkan jika gambar tidak ada
         $("#showImage_edit").removeAttr("src");
 
         // Tampilkan gambar jika ada
-        if (data.gambar) {
-          var gambarPath = "../static/" + data.gambar;
+        if (produk.gambar) {
+          var gambarPath = "../static/" + produk.gambar;
           $("#showImage_edit").attr("src", gambarPath);
         } else {
           $("#showImage_edit").attr("src", "../static/no_image.jpg");

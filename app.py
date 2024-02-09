@@ -350,8 +350,8 @@ def get_fasilitas(id):
 
 @app.route('/get_fasilitas', methods=['GET'])
 def get_fasilitas2():
-   data = list(db.fasilitas.find({}))
-   print(data)
+   fasilitas = list(db.fasilitas.find())
+   print(fasilitas)
    
    list_fasilitas = []
    for data in fasilitas :
@@ -578,6 +578,27 @@ def get_produk():
       })
    else:
       return jsonify({'error': 'Produk not found'}), 404
+   
+@app.route('/get_produk/<id>', methods=['GET'])
+def get_produk2(id):
+   produk = db.produk.find_one({'_id':ObjectId(id)})
+   print(produk)
+   
+   doc = {
+      '_id': id,
+      'tipe': produk['tipe'],
+      'deskripsi': produk['deskripsi'],
+      'gambar': produk['gambar'] if 'gambar' in produk else None
+   }
+      
+   if produk:
+      return jsonify({
+         'produk': doc
+      })
+   else:
+      return jsonify({'error': 'Produk not found'}), 404
+
+
 
 @app.route('/about')
 def about():
