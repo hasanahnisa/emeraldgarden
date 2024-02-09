@@ -31,9 +31,6 @@ function tampilkanFasilitas() {
     </div>
   </div>
 </div>
-
-
-
         `;
 
             $("#daftar-fasilitas").append(kartuFasilitas);

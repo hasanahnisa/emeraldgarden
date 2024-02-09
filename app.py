@@ -348,6 +348,31 @@ def get_fasilitas(id):
    else:
       return jsonify({'error': 'Produk not found'}), 404
 
+@app.route('/get_fasilitas', methods=['GET'])
+def get_fasilitas2():
+   data = list(db.fasilitas.find({}))
+   print(data)
+   
+   list_fasilitas = []
+   for data in fasilitas :
+      doc = {
+         '_id': str(data['_id']),
+         'nama': data['nama'],
+         'jenis': data['jenis'],
+         'deskripsi': data['deskripsi'],
+         'gambar': data['gambar'] if 'gambar' in data else None
+      }
+      
+      list_fasilitas.append(doc)
+
+   if data:
+      return jsonify({
+         'fasilitas': list_fasilitas
+      })
+   else:
+      return jsonify({'error': 'Produk not found'}), 404
+
+
 @app.route('/admin/produk')
 def adminProduk():
    msg = request.args.get('msg')
