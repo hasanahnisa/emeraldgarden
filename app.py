@@ -543,7 +543,7 @@ def hapusProduk(id_produk):
                      if os.path.exists(gambar_path):
                         os.remove(gambar_path)
                      db.produk.delete_one({'_id':ObjectId(id_produk)})
-                     return redirect(url_for('adminFasilitas'))
+                     return redirect(url_for('adminProduk'))
                else:
                   return render_template('login.html')
                
